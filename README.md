@@ -1,4 +1,14 @@
-# Test de langue
+# Ping Storage
+
+## Run
+
+### En dev
+
+`npm run startDev`
+
+### En prod
+
+`npm run build && npm run start`
 
 ## Migrations
 
