@@ -8,7 +8,6 @@ function buildClientService() {
 
     const clientService = {
         createClient,
-        getClient,
     };
 
     return clientService;
@@ -16,9 +15,5 @@ function buildClientService() {
     async function createClient(name: Client['name']) {
         const result = await clientRepository.insert({ name });
         return { clientId: result.identifiers[0].id };
-    }
-
-    async function getClient(id: Client['id']) {
-        return clientRepository.findOneOrFail({ where: { id } });
     }
 }
