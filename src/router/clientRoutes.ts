@@ -11,6 +11,11 @@ const clientRoutes: Array<routeType<any, any, any>> = [
         controller: clientController.createClient,
         schema: Joi.object({ name: Joi.string().required() }),
     },
+    {
+        method: 'GET',
+        path: '/clients/:clientId/health',
+        controller: clientController.assertIsClientUp,
+    },
 ];
 
 export { clientRoutes };
