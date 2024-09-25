@@ -5,7 +5,7 @@ import { Ping } from './Ping.entity';
 
 export { buildPingService };
 
-const MAX_DELAY_SINCE_LAST_PING = 60 * 1000;
+const MAX_DELAY_SINCE_LAST_PING = 120 * 1000;
 
 function buildPingService() {
     const pingRepository = dataSource.getRepository(Ping);
