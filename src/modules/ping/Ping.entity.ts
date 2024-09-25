@@ -9,6 +9,6 @@ export class Ping {
     @ManyToOne(() => Client, { onDelete: 'CASCADE', nullable: false })
     client: Client;
 
-    @CreateDateColumn({ type: 'timestamptz' })
+    @CreateDateColumn({ type: 'timestamp' })
     createdAt: string;
 }
