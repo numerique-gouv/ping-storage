@@ -1,3 +1,4 @@
+import { Client } from './Client.entity';
 import { buildClientService } from './client.service';
 
 export { buildClientController };
@@ -11,11 +12,11 @@ function buildClientController() {
 
     return clientController;
 
-    async function createClient(params: { body: { name: string } }) {
+    async function createClient(params: { body: { name: Client['name'] } }) {
         return clientService.createClient(params.body.name);
     }
 
-    async function assertIsClientUp(params: { urlParams: { clientId: string } }) {
-        return clientService.assertIsClientUp(params.urlParams.clientId);
+    async function assertIsClientUp(params: { urlParams: { name: Client['name'] } }) {
+        return clientService.assertIsClientUp(params.urlParams.name);
     }
 }

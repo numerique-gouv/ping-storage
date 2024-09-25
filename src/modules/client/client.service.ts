@@ -19,8 +19,9 @@ function buildClientService() {
         return { clientId: result.identifiers[0].id };
     }
 
-    async function assertIsClientUp(clientId: Client['id']) {
-        await pingService.assertHasClientBeenPingedRecently(clientId);
+    async function assertIsClientUp(name: Client['name']) {
+        const client = await clientRepository.findOneByOrFail({ name });
+        await pingService.assertHasClientBeenPingedRecently(client.id);
         return { ok: true };
     }
 }
