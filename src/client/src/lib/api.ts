@@ -1,7 +1,7 @@
 import { config } from '../config';
 import { localStorage } from './localStorage';
 
-const api = {};
+const api = { getClients };
 
 const BASE_URL = `${config.API_URL}/api`;
 
@@ -43,6 +43,11 @@ async function performApiCall(
         }
     }
     return response.json();
+}
+
+async function getClients() {
+    const URL = `${BASE_URL}/clients`;
+    return performApiCall(URL, 'GET');
 }
 
 export { api };

@@ -1,5 +1,5 @@
 import Express, { Response } from 'express';
-import path from 'path';
+import cors from 'cors';
 import bodyParser from 'body-parser';
 import { config } from '../config';
 import { dataSource } from '../dataSource';
@@ -14,7 +14,7 @@ async function runApp() {
 
     const app = Express();
 
-    app.use('/api', bodyParser.json(), router);
+    app.use('/api', bodyParser.json(), cors({ origin: config.HOST_URL }), router);
 
     app.listen(config.PORT, async () => {
         logger.info(`Server is running on port ${config.PORT}`);

@@ -1,3 +1,3 @@
-const ROUTE_KEYS = ['HOME'] as const;
+const ROUTE_KEYS = ['HOME', 'CLIENTS'] as const;
 
 export { ROUTE_KEYS };
