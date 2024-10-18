@@ -1,5 +1,7 @@
-ETQP, je peux modifier le nombre de points pour toutes les questions quand je modifie le nombre de points pour un exo
-ETQP, je veux pouvoir éditer le texte d'un texte à trous directement dans la page
-ETQP, j'ai accès à un support (Crisp)
-ETQBenoit, j'ai accès à un éditeur de BDD (Forest Admin)
-ETQP, j'ai un onboarding qui me permet d'inscrire les écoles où je taffe
+ETQDev, j'ai un script pour importer toutes les données de prod
+ETQU, quand je vais sur /clients, je vois la liste des clients
+ETQU, quand je clique sur un client, je suis redirigé vers clients/id
+ETQU, sur la page /clients/id, j'ai un front qui affiche up ou down
+ETQU, sur la page /clients/id, je vois trois encadrés : minutes, heures, jours
+ETQU, sur la page /clients/id, je vois les données qui viennent du back-end
+ETQU, sur la page /clients/id, je vois un résumé des derniers évènements

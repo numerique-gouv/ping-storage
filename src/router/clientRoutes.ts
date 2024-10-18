@@ -20,6 +20,12 @@ const clientRoutes: Array<routeType<any, any, any>> = [
         path: '/clients/:name/health',
         controller: clientController.assertIsClientUp,
     },
+
+    {
+        method: 'GET',
+        path: '/clients',
+        controller: clientController.getAllClients,
+    },
 ];
 
 export { clientRoutes };

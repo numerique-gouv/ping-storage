@@ -10,9 +10,14 @@ function buildClientService() {
     const clientService = {
         createClient,
         assertIsClientUp,
+        getAllClients,
     };
 
     return clientService;
+
+    async function getAllClients() {
+        return clientRepository.find({});
+    }
 
     async function createClient(name: Client['name']) {
         const result = await clientRepository.insert({ name });

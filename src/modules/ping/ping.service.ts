@@ -12,10 +12,15 @@ function buildPingService() {
 
     const pingService = {
         createPing,
+        getAllPings,
         assertHasClientBeenPingedRecently,
     };
 
     return pingService;
+
+    async function getAllPings() {
+        return pingRepository.find({ relations: ['client'] });
+    }
 
     async function createPing(clientId: Client['id']) {
         await pingRepository.insert({ client: { id: clientId } });
@@ -32,7 +37,6 @@ function buildPingService() {
                 createdAt: MoreThan(lastPingThresholdDate.toISOString()),
             },
         });
-        console.log(pings);
         if (pings.length === 0) {
             throw new Error(
                 `No ping found ${MAX_DELAY_SINCE_LAST_PING} ms ago for clientId ${clientId}`,
