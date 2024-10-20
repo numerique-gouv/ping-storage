@@ -33,8 +33,8 @@ function buildClientService() {
     }
 
     async function assertIsClientUp(name: Client['name']) {
-        const client = await clientRepository.findOneByOrFail({ name });
-        await pingService.assertHasClientBeenPingedRecently(client.id);
+        const client = await clientRepository.findOneOrFail({ where: { name } });
+        await pingService.assertHasClientBeenPingedRecently(client);
         return { ok: true };
     }
 

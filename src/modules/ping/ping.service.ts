@@ -43,19 +43,20 @@ function buildPingService() {
         return true;
     }
 
-    async function assertHasClientBeenPingedRecently(clientId: Client['id']) {
+    async function assertHasClientBeenPingedRecently(client: Client) {
         const now = new Date();
+        const MAX_DELAY_SINCE_LAST_PING = (client.frequency * 60 + client.gracePeriod * 60) * 1000;
         const lastPingThresholdDate = new Date(now.getTime() - MAX_DELAY_SINCE_LAST_PING);
         const pings = await pingRepository.find({
             relations: ['client'],
             where: {
-                client: { id: clientId },
+                client: { id: client.id },
                 createdAt: MoreThan(lastPingThresholdDate.toISOString()),
             },
         });
         if (pings.length === 0) {
             throw new Error(
-                `No ping found ${MAX_DELAY_SINCE_LAST_PING} ms ago for clientId ${clientId}`,
+                `No ping found ${MAX_DELAY_SINCE_LAST_PING} ms ago for client "${client.name}"`,
             );
         }
     }
