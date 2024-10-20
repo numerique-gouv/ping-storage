@@ -24,6 +24,16 @@ const clientRoutes: Array<routeType<any, any, any>> = [
     {
         method: 'GET',
         path: '/clients',
+        controller: clientController.getClients,
+    },
+    {
+        method: 'GET',
+        path: '/clients/:clientId/summary',
+        controller: clientController.getClientSummary,
+    },
+    {
+        method: 'GET',
+        path: '/all-clients',
         controller: clientController.getAllClients,
     },
 ];

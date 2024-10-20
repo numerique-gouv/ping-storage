@@ -1,9 +1,19 @@
 import { config } from '../config';
 import { localStorage } from './localStorage';
 
-const api = { getClients };
+const api = { getClients, getClientSummary };
 
 const BASE_URL = `${config.API_URL}/api`;
+
+async function getClients() {
+    const URL = `${BASE_URL}/clients`;
+    return performApiCall(URL, 'GET');
+}
+
+async function getClientSummary(clientId: string) {
+    const URL = `${BASE_URL}/clients/${clientId}/summary`;
+    return performApiCall(URL, 'GET');
+}
 
 async function performApiCall(
     url: string,
@@ -43,11 +53,6 @@ async function performApiCall(
         }
     }
     return response.json();
-}
-
-async function getClients() {
-    const URL = `${BASE_URL}/clients`;
-    return performApiCall(URL, 'GET');
 }
 
 export { api };

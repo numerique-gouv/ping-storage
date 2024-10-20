@@ -9,6 +9,8 @@ function buildClientController() {
         createClient,
         assertIsClientUp,
         getAllClients,
+        getClients,
+        getClientSummary,
     };
 
     return clientController;
@@ -23,5 +25,13 @@ function buildClientController() {
 
     async function getAllClients() {
         return clientService.getAllClients();
+    }
+
+    async function getClients() {
+        return clientService.getAllClients();
+    }
+
+    async function getClientSummary(params: { urlParams: { clientId: Client['id'] } }) {
+        return clientService.getClientSummary(params.urlParams.clientId);
     }
 }

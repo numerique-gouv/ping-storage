@@ -1,5 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { api } from '../lib/api';
+import { Link } from 'react-router-dom';
+import { pathHandler } from '../lib/pathHandler';
 
 type clientType = {
     id: string;
@@ -16,7 +18,13 @@ function Clients() {
         <div>
             <ul>
                 {query.data.map((client) => (
-                    <li key={client.id}>{client.name}</li>
+                    <li key={client.id}>
+                        <Link
+                            to={pathHandler.getRoutePath('CLIENT_SUMMARY', { clientId: client.id })}
+                        >
+                            {client.name}
+                        </Link>
+                    </li>
                 ))}
             </ul>
         </div>

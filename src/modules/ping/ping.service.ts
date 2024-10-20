@@ -2,6 +2,7 @@ import { MoreThan } from 'typeorm';
 import { dataSource } from '../../dataSource';
 import { Client } from '../client';
 import { Ping } from './Ping.entity';
+import { buildEventService } from '../event';
 
 export { buildPingService };
 
@@ -9,6 +10,7 @@ const MAX_DELAY_SINCE_LAST_PING = 120 * 1000;
 
 function buildPingService() {
     const pingRepository = dataSource.getRepository(Ping);
+    const eventService = buildEventService();
 
     const pingService = {
         createPing,
@@ -23,7 +25,21 @@ function buildPingService() {
     }
 
     async function createPing(clientId: Client['id']) {
+        await pingRepository.delete({ client: { id: clientId } });
         await pingRepository.insert({ client: { id: clientId } });
+
+        const lastEvent = await eventService.getLastEvent(clientId);
+        if (!lastEvent) {
+            await eventService.createEvent(clientId, { title: 'Service en route !', kind: 'up' });
+        } else {
+            if (lastEvent.kind === 'down') {
+                await eventService.createEvent(clientId, {
+                    title: 'Le service est revenu',
+                    kind: 'up',
+                });
+            }
+        }
+
         return true;
     }
 
