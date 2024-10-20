@@ -13,4 +13,7 @@ export class Client {
 
     @Column({ default: 1 })
     gracePeriod: number;
+
+    @Column({ type: 'timestamp', nullable: true })
+    lastPingedAt: string | null;
 }

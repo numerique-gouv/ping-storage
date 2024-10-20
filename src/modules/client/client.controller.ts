@@ -11,6 +11,7 @@ function buildClientController() {
         getAllClients,
         getClients,
         getClientSummary,
+        pingClient,
     };
 
     return clientController;
@@ -29,6 +30,10 @@ function buildClientController() {
 
     async function getClients() {
         return clientService.getAllClients();
+    }
+
+    async function pingClient(params: { urlParams: { clientId: Client['id'] } }) {
+        return clientService.pingClient(params.urlParams.clientId);
     }
 
     async function getClientSummary(params: { urlParams: { clientId: Client['id'] } }) {

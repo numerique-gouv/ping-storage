@@ -36,6 +36,11 @@ const clientRoutes: Array<routeType<any, any, any>> = [
         path: '/all-clients',
         controller: clientController.getAllClients,
     },
+    {
+        method: 'POST',
+        path: '/clients/:clientId/pings',
+        controller: clientController.pingClient,
+    },
 ];
 
 export { clientRoutes };
