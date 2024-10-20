@@ -10,7 +10,7 @@ function buildEventService() {
     const eventService = {
         createEvent,
         getLastEvent,
-        getEvents,
+        getEventsForClient,
         getAllEvents,
     };
 
@@ -24,7 +24,7 @@ function buildEventService() {
         });
     }
 
-    async function getEvents(clientId: Client['id']) {
+    async function getEventsForClient(clientId: Client['id']) {
         return eventRepository.find({
             where: { client: { id: clientId } },
             order: { createdAt: 'DESC' },
