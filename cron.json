@@ -1,0 +1,8 @@
+{
+    "jobs": [
+        {
+            "command": "* * * * * npm run script:checkClients",
+            "size": "S"
+        }
+    ]
+}
