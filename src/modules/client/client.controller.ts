@@ -9,6 +9,9 @@ function buildClientController() {
         createClient,
         assertIsClientUp,
         getAllClients,
+        getClients,
+        getClientSummary,
+        pingClient,
     };
 
     return clientController;
@@ -23,5 +26,17 @@ function buildClientController() {
 
     async function getAllClients() {
         return clientService.getAllClients();
+    }
+
+    async function getClients() {
+        return clientService.getAllClients();
+    }
+
+    async function pingClient(params: { urlParams: { clientId: Client['id'] } }) {
+        return clientService.pingClient(params.urlParams.clientId);
+    }
+
+    async function getClientSummary(params: { urlParams: { clientId: Client['id'] } }) {
+        return clientService.getClientSummary(params.urlParams.clientId);
     }
 }

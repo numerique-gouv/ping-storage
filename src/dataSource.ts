@@ -2,7 +2,7 @@ import { DataSource } from 'typeorm';
 import { config } from './config';
 
 import { Client } from './modules/client';
-import { Ping } from './modules/ping';
+import { Event } from './modules/event';
 
 const dataSource = new DataSource({
     type: 'postgres',
@@ -13,7 +13,7 @@ const dataSource = new DataSource({
     database: config.DATABASE_NAME,
     logging: ['warn', 'error'],
     connectTimeoutMS: 20000,
-    entities: [Client, Ping],
+    entities: [Client, Event],
     subscribers: [],
     migrations: ['**/migrations/*.js'],
 });

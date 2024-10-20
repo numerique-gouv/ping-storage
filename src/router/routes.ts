@@ -1,5 +1,5 @@
 import { clientRoutes } from './clientRoutes';
-import { pingRoutes } from './pingRoutes';
+import { eventRoutes } from './eventRoutes';
 import { routeType } from './types';
 
 const routes = buildRoutes();
@@ -7,7 +7,7 @@ const routes = buildRoutes();
 function buildRoutes() {
     const routes: routeType<any, any, any>[] = [];
     routes.push(...clientRoutes);
-    routes.push(...pingRoutes);
+    routes.push(...eventRoutes);
     return routes;
 }
 
