@@ -18,7 +18,7 @@ const clientRoutes: Array<routeType<any, any, any>> = [
     {
         method: 'GET',
         path: '/clients/:name/health',
-        controller: clientController.assertIsClientUp,
+        controller: clientController.assertIsClientUpByName,
     },
 
     {
