@@ -9,10 +9,11 @@ function buildClientService() {
     const eventService = buildEventService();
     const clientService = {
         createClient,
-        assertIsClientUp,
+        assertIsClientUpByName,
         getAllClients,
         getClientSummary,
         pingClient,
+        checkAllClients,
     };
 
     return clientService;
@@ -51,8 +52,41 @@ function buildClientService() {
         return true;
     }
 
-    async function assertIsClientUp(name: Client['name']) {
+    async function checkAllClients() {
+        const clients = await clientRepository.find({});
+        const eventService = buildEventService();
+
+        return Promise.all(
+            clients.map(async (client) => {
+                try {
+                    await assertIsClientUp(client);
+                } catch (error) {
+                    console.error(error);
+                    const lastEvent = await eventService.getLastEvent(client.id);
+                    if (!lastEvent) {
+                        await eventService.createEvent(client.id, {
+                            title: 'Le service ne fonctionne pas',
+                            kind: 'down',
+                        });
+                    } else {
+                        if (lastEvent.kind === 'up') {
+                            await eventService.createEvent(client.id, {
+                                title: 'Le service est tombé',
+                                kind: 'down',
+                            });
+                        }
+                    }
+                }
+            }),
+        );
+    }
+
+    async function assertIsClientUpByName(name: Client['name']) {
         const client = await clientRepository.findOneOrFail({ where: { name } });
+        await assertIsClientUp(client);
+    }
+
+    async function assertIsClientUp(client: Client) {
         if (!client.lastPingedAt) {
             throw new Error(`Client "${client.name}" has never been pinged`);
         }

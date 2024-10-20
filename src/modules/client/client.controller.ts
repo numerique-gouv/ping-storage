@@ -7,7 +7,7 @@ function buildClientController() {
     const clientService = buildClientService();
     const clientController = {
         createClient,
-        assertIsClientUp,
+        assertIsClientUpByName,
         getAllClients,
         getClients,
         getClientSummary,
@@ -20,8 +20,8 @@ function buildClientController() {
         return clientService.createClient(params.body.name);
     }
 
-    async function assertIsClientUp(params: { urlParams: { name: Client['name'] } }) {
-        return clientService.assertIsClientUp(params.urlParams.name);
+    async function assertIsClientUpByName(params: { urlParams: { name: Client['name'] } }) {
+        return clientService.assertIsClientUpByName(params.urlParams.name);
     }
 
     async function getAllClients() {
