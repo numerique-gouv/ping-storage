@@ -1,7 +1,7 @@
 {
     "jobs": [
         {
-            "command": "* * * * * npm run script:checkClients",
+            "command": "*/10 * * * * npm run script:checkClients",
             "size": "S"
         }
     ]
