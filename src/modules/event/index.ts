@@ -1,4 +1,4 @@
 import { Event } from './Event.entity';
 import { buildEventService } from './event.service';
-
-export { Event, buildEventService };
+import { buildEventController } from './event.controller';
+export { Event, buildEventService, buildEventController };

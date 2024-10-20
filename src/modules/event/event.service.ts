@@ -11,6 +11,7 @@ function buildEventService() {
         createEvent,
         getLastEvent,
         getEvents,
+        getAllEvents,
     };
 
     return eventService;
@@ -27,6 +28,12 @@ function buildEventService() {
         return eventRepository.find({
             where: { client: { id: clientId } },
             order: { createdAt: 'DESC' },
+            relations: ['client'],
+        });
+    }
+
+    async function getAllEvents() {
+        return eventRepository.find({
             relations: ['client'],
         });
     }
