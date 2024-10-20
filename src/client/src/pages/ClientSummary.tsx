@@ -4,25 +4,12 @@ import { api } from '../lib/api';
 
 type statusValueType = 'up' | 'down';
 
-// type elementaryStatusType = { timestamp: number; statusValue: statusValueType };
-
-type eventType = { timestamp: number; kind: statusValueType; title: string };
+type eventType = { createdAt: string; kind: statusValueType; title: string; id: number };
 
 type clientSummaryType = {
-    id: string;
     name: string;
-    currentStatusValue: statusValueType;
-    // uptime: {
-    //     last24Hours: elementaryStatusType[];
-    //     last90Days: elementaryStatusType[];
-    // };
-    // overallUptime: {
-    //     last24Hours: number;
-    //     last7Days: number;
-    //     last30Days: number;
-    //     last90Days: number;
-    // };
-    events: eventType[];
+    status: statusValueType;
+    events: Array<eventType>;
 };
 
 function ClientSummary() {
@@ -36,7 +23,20 @@ function ClientSummary() {
     if (!query.data) {
         return <div>Loading...</div>;
     }
-    return <div></div>;
+    return (
+        <div>
+            <h1>{query.data.name}</h1>
+            <h2>{query.data.status}</h2>
+            <h3>Évènements</h3>
+            <ul>
+                {query.data.events.map((event) => (
+                    <li key={`event-${event.id}`}>
+                        <strong>{event.kind}</strong> - {event.title}
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
 }
 
 export { ClientSummary };

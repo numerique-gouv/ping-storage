@@ -1,5 +1,6 @@
 import { dataSource } from '../../dataSource';
 import { buildEventService } from '../event';
+import { eventKindType } from '../event/types';
 import { Client } from './Client.entity';
 
 export { buildClientService };
@@ -106,5 +107,23 @@ function buildClientService() {
         return { ok: true };
     }
 
-    async function getClientSummary(clientId: Client['id']) {}
+    async function getClientStatus(client: Client): Promise<eventKindType> {
+        try {
+            await assertIsClientUp(client);
+            return 'up';
+        } catch (error) {
+            return 'down';
+        }
+    }
+
+    async function getClientSummary(clientId: Client['id']) {
+        const client = await clientRepository.findOneByOrFail({ id: clientId });
+        const events = await eventService.getEventsForClient(clientId);
+        const status = await getClientStatus(client);
+        return {
+            name: client.name,
+            status,
+            events,
+        };
+    }
 }
