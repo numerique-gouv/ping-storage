@@ -89,7 +89,7 @@ function buildClientService() {
 
     async function assertIsClientUpByName(name: Client['name']) {
         const client = await clientRepository.findOneOrFail({ where: { name } });
-        await assertIsClientUp(client);
+        return assertIsClientUp(client);
     }
 
     async function assertIsClientUp(client: Client) {
