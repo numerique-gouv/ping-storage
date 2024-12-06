@@ -16,4 +16,7 @@ export class Monitor {
 
     @Column({ type: 'timestamp', nullable: true })
     lastSuccessfulCall: string | null;
+
+    @Column({ type: 'timestamp', nullable: true })
+    lastCall: string | null;
 }

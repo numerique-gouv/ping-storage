@@ -3,6 +3,10 @@
         {
             "command": "*/10 * * * * npm run script:checkSystemPulses",
             "size": "S"
+        },
+        {
+            "command": "*/10 * * * * npm run script:pingMonitors",
+            "size": "S"
         }
     ]
 }
