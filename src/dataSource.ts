@@ -3,6 +3,7 @@ import { config } from './config';
 
 import { SystemPulse } from './modules/systemPulse';
 import { Event } from './modules/event';
+import { Monitor } from './modules/monitor';
 
 const dataSource = new DataSource({
     type: 'postgres',
@@ -13,7 +14,7 @@ const dataSource = new DataSource({
     database: config.DATABASE_NAME,
     logging: ['warn', 'error'],
     connectTimeoutMS: 20000,
-    entities: [SystemPulse, Event],
+    entities: [SystemPulse, Event, Monitor],
     subscribers: [],
     migrations: ['**/migrations/*.js'],
 });
