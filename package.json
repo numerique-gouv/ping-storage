@@ -16,7 +16,7 @@
         "test:back": "jest",
         "typeorm": "typeorm-ts-node-esm",
         "script:importDb": "npm run buildServer && node dist/src/scripts/importDb.js",
-        "script:checkClients": "npm run buildServer && node dist/src/scripts/checkClients.js"
+        "script:checkSystemPulses": "npm run buildServer && node dist/src/scripts/checkSystemPulses.js"
     },
     "author": "",
     "license": "ISC",
