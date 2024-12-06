@@ -8,7 +8,7 @@ import { useAlert } from '../../lib/alert';
 function MonitorCreationForm() {
     const [name, setName] = useState('');
     const [url, setUrl] = useState('');
-    const [frequency, setFrequency] = useState(1);
+    const [frequency, setFrequency] = useState(10);
     const { displayAlert } = useAlert();
 
     const createMonitorMutation = useMutation({
