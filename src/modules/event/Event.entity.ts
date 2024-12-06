@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Client } from '../client';
+import { SystemPulse } from '../systemPulse';
 import { EVENT_KINDS, eventKindType } from './types';
 
 @Entity()
@@ -13,8 +13,8 @@ export class Event {
     @Column('enum', { enum: EVENT_KINDS })
     kind: eventKindType;
 
-    @ManyToOne(() => Client, { onDelete: 'CASCADE', nullable: false })
-    client: Client;
+    @ManyToOne(() => SystemPulse, { onDelete: 'CASCADE', nullable: false })
+    systemPulse: SystemPulse;
 
     @CreateDateColumn({ type: 'timestamp' })
     createdAt: string;

@@ -6,18 +6,18 @@ type statusValueType = 'up' | 'down';
 
 type eventType = { createdAt: string; kind: statusValueType; title: string; id: number };
 
-type clientSummaryType = {
+type systemPulseSummaryType = {
     name: string;
     status: statusValueType;
     events: Array<eventType>;
 };
 
-function ClientSummary() {
-    const params = useParams<{ clientId: string }>();
-    const clientId = params.clientId as string;
-    const query = useQuery<clientSummaryType>({
-        queryFn: () => api.getClientSummary(clientId),
-        queryKey: ['clients', clientId, 'summary'],
+function SystemPulseSummary() {
+    const params = useParams<{ systemPulseId: string }>();
+    const systemPulseId = params.systemPulseId as string;
+    const query = useQuery<systemPulseSummaryType>({
+        queryFn: () => api.getSystemPulseSummary(systemPulseId),
+        queryKey: ['systemPulses', systemPulseId, 'summary'],
     });
 
     if (!query.data) {
@@ -39,4 +39,4 @@ function ClientSummary() {
     );
 }
 
-export { ClientSummary };
+export { SystemPulseSummary };

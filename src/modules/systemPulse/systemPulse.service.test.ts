@@ -1,15 +1,15 @@
 import { Event } from '../event';
-import { Client } from './Client.entity';
-import { buildClientService } from './client.service';
+import { SystemPulse } from './SystemPulse.entity';
+import { buildSystemPulseService } from './systemPulse.service';
 
-describe('client.service', () => {
+describe('systemPulse.service', () => {
     describe('aggregateEvents', () => {
-        const clientService = buildClientService();
+        const systemPulseService = buildSystemPulseService();
         it('should return undefined if no events', () => {
             const events = [] as any[];
             const now = 10800000;
 
-            const aggregatedEvents = clientService.aggregateEvents(events, 'hours', 3, now);
+            const aggregatedEvents = systemPulseService.aggregateEvents(events, 'hours', 3, now);
 
             expect(aggregatedEvents).toEqual([
                 { timestamp: 0, upPercentage: undefined },
@@ -23,7 +23,7 @@ describe('client.service', () => {
             const events = [event];
             const now = 14400000;
 
-            const aggregatedEvents = clientService.aggregateEvents(events, 'hours', 3, now);
+            const aggregatedEvents = systemPulseService.aggregateEvents(events, 'hours', 3, now);
 
             expect(aggregatedEvents).toEqual([
                 { timestamp: 3600000, upPercentage: 100 },
@@ -37,7 +37,7 @@ describe('client.service', () => {
             const events = [event];
             const now = 14400000;
 
-            const aggregatedEvents = clientService.aggregateEvents(events, 'hours', 3, now);
+            const aggregatedEvents = systemPulseService.aggregateEvents(events, 'hours', 3, now);
 
             expect(aggregatedEvents).toEqual([
                 { timestamp: 3600000, upPercentage: 0 },
@@ -50,7 +50,7 @@ describe('client.service', () => {
             const events = [event];
             const now = 14400000;
 
-            const aggregatedEvents = clientService.aggregateEvents(events, 'hours', 3, now);
+            const aggregatedEvents = systemPulseService.aggregateEvents(events, 'hours', 3, now);
 
             expect(aggregatedEvents).toEqual([
                 { timestamp: 3600000, upPercentage: undefined },
@@ -64,7 +64,7 @@ describe('client.service', () => {
             const events = [firstEvent, secondEvent];
             const now = 14400000;
 
-            const aggregatedEvents = clientService.aggregateEvents(events, 'hours', 3, now);
+            const aggregatedEvents = systemPulseService.aggregateEvents(events, 'hours', 3, now);
 
             expect(aggregatedEvents).toEqual([
                 { timestamp: 3600000, upPercentage: 0 },
@@ -78,7 +78,7 @@ describe('client.service', () => {
             const events = [firstEvent, secondEvent];
             const now = 14400000;
 
-            const aggregatedEvents = clientService.aggregateEvents(events, 'hours', 3, now);
+            const aggregatedEvents = systemPulseService.aggregateEvents(events, 'hours', 3, now);
 
             expect(aggregatedEvents).toEqual([
                 { timestamp: 3600000, upPercentage: 0 },
@@ -92,7 +92,7 @@ describe('client.service', () => {
             const events = [firstEvent, secondEvent];
             const now = 14400000;
 
-            const aggregatedEvents = clientService.aggregateEvents(events, 'hours', 3, now);
+            const aggregatedEvents = systemPulseService.aggregateEvents(events, 'hours', 3, now);
 
             expect(aggregatedEvents).toEqual([
                 { timestamp: 3600000, upPercentage: 100 },
@@ -107,7 +107,7 @@ describe('client.service', () => {
             const events = [firstEvent, secondEvent];
             const now = 14400000;
 
-            const aggregatedEvents = clientService.aggregateEvents(events, 'hours', 3, now);
+            const aggregatedEvents = systemPulseService.aggregateEvents(events, 'hours', 3, now);
 
             expect(aggregatedEvents).toEqual([
                 { timestamp: 3600000, upPercentage: 0 },
@@ -123,7 +123,7 @@ describe('client.service', () => {
             const events = [firstEvent, secondEvent, thirdEvent];
             const now = 14400000;
 
-            const aggregatedEvents = clientService.aggregateEvents(events, 'hours', 3, now);
+            const aggregatedEvents = systemPulseService.aggregateEvents(events, 'hours', 3, now);
 
             expect(aggregatedEvents).toEqual([
                 { timestamp: 3600000, upPercentage: 100 },
@@ -137,13 +137,13 @@ describe('client.service', () => {
 const eventFactory = { buildEvent };
 
 function buildEvent(params: { kind: Event['kind']; timestamp: number }): Event {
-    const client = {} as Client;
+    const systemPulse = {} as SystemPulse;
     const createdAtDate = new Date();
     createdAtDate.setTime(params.timestamp);
 
     return {
         id: 1,
-        client,
+        systemPulse,
         title: 'titre',
         createdAt: createdAtDate.toISOString(),
         kind: params.kind,

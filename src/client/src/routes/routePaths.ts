@@ -4,11 +4,11 @@ const ROUTE_PATHS: Record<(typeof ROUTE_KEYS)[number], { path: string }> = {
     HOME: {
         path: '/',
     },
-    CLIENT_SUMMARY: {
-        path: '/clients/:clientId',
+    SYSTEM_PULSE_SUMMARY: {
+        path: '/system-pulses/:systemPulseId',
     },
-    CLIENTS: {
-        path: '/clients',
+    SYSTEM_PULSES: {
+        path: '/system-pulses',
     },
 };
 

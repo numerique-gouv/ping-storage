@@ -1,16 +1,16 @@
 import { dataSource } from '../dataSource';
-import { buildClientService, Client } from '../modules/client';
+import { buildSystemPulseService } from '../modules/systemPulse';
 
-async function checkClients() {
-    const clientService = buildClientService();
+async function checkSystemPulses() {
+    const systemPulseService = buildSystemPulseService();
     console.log('Initializing database...');
     await dataSource.initialize();
     console.log('Database initialized!');
-    console.log('Checking clients...');
+    console.log('Checking systemPulses...');
 
-    await clientService.checkAllClients();
+    await systemPulseService.checkAllSystemPulses();
 
     console.log('Done!');
 }
 
-checkClients();
+checkSystemPulses();

@@ -1,5 +1,5 @@
 import { dataSource } from '../../dataSource';
-import { Client } from '../client';
+import { SystemPulse } from '../systemPulse';
 import { Event } from './Event.entity';
 
 export { buildEventService };
@@ -10,40 +10,40 @@ function buildEventService() {
     const eventService = {
         createEvent,
         getLastEvent,
-        getEventsForClient,
+        getEventsForSystemPulse,
         getAllEvents,
     };
 
     return eventService;
 
-    async function getLastEvent(clientId: Client['id']) {
+    async function getLastEvent(systemPulseId: SystemPulse['id']) {
         return eventRepository.findOne({
-            where: { client: { id: clientId } },
+            where: { systemPulse: { id: systemPulseId } },
             order: { createdAt: 'DESC' },
-            relations: ['client'],
+            relations: ['systemPulse'],
         });
     }
 
-    async function getEventsForClient(clientId: Client['id']) {
+    async function getEventsForSystemPulse(systemPulseId: SystemPulse['id']) {
         return eventRepository.find({
-            where: { client: { id: clientId } },
+            where: { systemPulse: { id: systemPulseId } },
             order: { createdAt: 'DESC' },
-            relations: ['client'],
+            relations: ['systemPulse'],
         });
     }
 
     async function getAllEvents() {
         return eventRepository.find({
-            relations: ['client'],
+            relations: ['systemPulse'],
         });
     }
 
     async function createEvent(
-        clientId: Client['id'],
+        systemPulseId: SystemPulse['id'],
         params: { title: Event['title']; kind: Event['kind'] },
     ) {
         await eventRepository.insert({
-            client: { id: clientId },
+            systemPulse: { id: systemPulseId },
             title: params.title,
             kind: params.kind,
         });

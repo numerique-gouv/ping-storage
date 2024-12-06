@@ -1,17 +1,17 @@
 import { config } from '../config';
 import { localStorage } from './localStorage';
 
-const api = { getClients, getClientSummary };
+const api = { getSystemPulses, getSystemPulseSummary };
 
 const BASE_URL = `${config.API_URL}/api`;
 
-async function getClients() {
-    const URL = `${BASE_URL}/clients`;
+async function getSystemPulses() {
+    const URL = `${BASE_URL}/systemPulses`;
     return performApiCall(URL, 'GET');
 }
 
-async function getClientSummary(clientId: string) {
-    const URL = `${BASE_URL}/clients/${clientId}/summary`;
+async function getSystemPulseSummary(clientId: string) {
+    const URL = `${BASE_URL}/systemPulses/${clientId}/summary`;
     return performApiCall(URL, 'GET');
 }
 

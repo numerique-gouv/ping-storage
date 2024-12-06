@@ -2,53 +2,56 @@ import { dataSource } from '../../dataSource';
 import { generateArray } from '../../lib/utils';
 import { buildEventService, Event } from '../event';
 import { eventKindType } from '../event/types';
-import { Client } from './Client.entity';
+import { SystemPulse } from './SystemPulse.entity';
 
-export { buildClientService };
+export { buildSystemPulseService };
 
 type rangeType = { timestamp: number; upPercentage: number | undefined };
 type rangePeriod = 'day' | 'hours';
 
-function buildClientService() {
-    const clientRepository = dataSource.getRepository(Client);
+function buildSystemPulseService() {
+    const systemPulseRepository = dataSource.getRepository(SystemPulse);
     const eventService = buildEventService();
-    const clientService = {
-        createClient,
-        assertIsClientUpByName,
-        getAllClients,
-        getClientSummary,
-        pingClient,
-        checkAllClients,
+    const systemPulseService = {
+        createSystemPulse,
+        assertIsSystemPulseUpByName,
+        getAllSystemPulses,
+        getSystemPulseSummary,
+        pingSystemPulse,
+        checkAllSystemPulses,
         aggregateEvents,
     };
 
-    return clientService;
+    return systemPulseService;
 
-    async function getAllClients() {
-        return clientRepository.find({});
+    async function getAllSystemPulses() {
+        return systemPulseRepository.find({});
     }
 
-    async function createClient(name: Client['name']) {
-        const result = await clientRepository.insert({ name });
-        return { clientId: result.identifiers[0].id };
+    async function createSystemPulse(name: SystemPulse['name']) {
+        const result = await systemPulseRepository.insert({ name });
+        return { systemPulseId: result.identifiers[0].id };
     }
 
-    async function pingClient(clientId: Client['id']) {
+    async function pingSystemPulse(systemPulseId: SystemPulse['id']) {
         const now = new Date();
-        const result = await clientRepository.update(
-            { id: clientId },
+        const result = await systemPulseRepository.update(
+            { id: systemPulseId },
             { lastPingedAt: now.toISOString() },
         );
         if (result.affected !== 1) {
-            throw new Error(`client id ${clientId} does not exist`);
+            throw new Error(`systemPulse id ${systemPulseId} does not exist`);
         }
 
-        const lastEvent = await eventService.getLastEvent(clientId);
+        const lastEvent = await eventService.getLastEvent(systemPulseId);
         if (!lastEvent) {
-            await eventService.createEvent(clientId, { title: 'Service en route !', kind: 'up' });
+            await eventService.createEvent(systemPulseId, {
+                title: 'Service en route !',
+                kind: 'up',
+            });
         } else {
             if (lastEvent.kind === 'down') {
-                await eventService.createEvent(clientId, {
+                await eventService.createEvent(systemPulseId, {
                     title: 'Le service est revenu',
                     kind: 'up',
                 });
@@ -58,25 +61,25 @@ function buildClientService() {
         return true;
     }
 
-    async function checkAllClients() {
-        const clients = await clientRepository.find({});
+    async function checkAllSystemPulses() {
+        const systemPulses = await systemPulseRepository.find({});
         const eventService = buildEventService();
 
         return Promise.all(
-            clients.map(async (client) => {
+            systemPulses.map(async (systemPulse) => {
                 try {
-                    await assertIsClientUp(client);
+                    await assertIsSystemPulseUp(systemPulse);
                 } catch (error) {
                     console.error(error);
-                    const lastEvent = await eventService.getLastEvent(client.id);
+                    const lastEvent = await eventService.getLastEvent(systemPulse.id);
                     if (!lastEvent) {
-                        await eventService.createEvent(client.id, {
+                        await eventService.createEvent(systemPulse.id, {
                             title: 'Le service ne fonctionne pas',
                             kind: 'down',
                         });
                     } else {
                         if (lastEvent.kind === 'up') {
-                            await eventService.createEvent(client.id, {
+                            await eventService.createEvent(systemPulse.id, {
                                 title: 'Le service est tombé',
                                 kind: 'down',
                             });
@@ -87,24 +90,25 @@ function buildClientService() {
         );
     }
 
-    async function assertIsClientUpByName(name: Client['name']) {
-        const client = await clientRepository.findOneOrFail({ where: { name } });
-        return assertIsClientUp(client);
+    async function assertIsSystemPulseUpByName(name: SystemPulse['name']) {
+        const systemPulse = await systemPulseRepository.findOneOrFail({ where: { name } });
+        return assertIsSystemPulseUp(systemPulse);
     }
 
-    async function assertIsClientUp(client: Client) {
-        if (!client.lastPingedAt) {
-            throw new Error(`Client "${client.name}" has never been pinged`);
+    async function assertIsSystemPulseUp(systemPulse: SystemPulse) {
+        if (!systemPulse.lastPingedAt) {
+            throw new Error(`SystemPulse "${systemPulse.name}" has never been pinged`);
         }
         const now = new Date();
-        const MAX_DELAY_SINCE_LAST_PING = (client.frequency * 60 + client.gracePeriod * 60) * 1000;
+        const MAX_DELAY_SINCE_LAST_PING =
+            (systemPulse.frequency * 60 + systemPulse.gracePeriod * 60) * 1000;
         const lastPingThresholdDate = new Date(now.getTime() - MAX_DELAY_SINCE_LAST_PING);
-        const lastPingedAt = new Date(client.lastPingedAt);
+        const lastPingedAt = new Date(systemPulse.lastPingedAt);
 
         if (lastPingedAt.getTime() < lastPingThresholdDate.getTime()) {
             throw new Error(
-                `Last ping found for client "${
-                    client.name
+                `Last ping found for systemPulse "${
+                    systemPulse.name
                 }" was too long ago: ${lastPingedAt.toLocaleString()}`,
             );
         }
@@ -112,21 +116,21 @@ function buildClientService() {
         return { ok: true };
     }
 
-    async function getClientStatus(client: Client): Promise<eventKindType> {
+    async function getSystemPulseStatus(systemPulse: SystemPulse): Promise<eventKindType> {
         try {
-            await assertIsClientUp(client);
+            await assertIsSystemPulseUp(systemPulse);
             return 'up';
         } catch (error) {
             return 'down';
         }
     }
 
-    async function getClientSummary(clientId: Client['id']) {
-        const client = await clientRepository.findOneByOrFail({ id: clientId });
-        const events = await eventService.getEventsForClient(clientId);
-        const status = await getClientStatus(client);
+    async function getSystemPulseSummary(systemPulseId: SystemPulse['id']) {
+        const systemPulse = await systemPulseRepository.findOneByOrFail({ id: systemPulseId });
+        const events = await eventService.getEventsForSystemPulse(systemPulseId);
+        const status = await getSystemPulseStatus(systemPulse);
         return {
-            name: client.name,
+            name: systemPulse.name,
             status,
             events,
         };

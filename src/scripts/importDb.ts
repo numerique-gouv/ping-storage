@@ -1,26 +1,26 @@
 import { dataSource } from '../dataSource';
 import { api } from '../lib/api';
-import { Client } from '../modules/client';
+import { SystemPulse } from '../modules/systemPulse';
 import { Event } from '../modules/event';
 
 async function importDb() {
     console.log('Initializing database...');
     await dataSource.initialize();
     console.log('Database initialized!');
-    const clientRepository = dataSource.getRepository(Client);
+    const systemPulseRepository = dataSource.getRepository(SystemPulse);
     const eventRepository = dataSource.getRepository(Event);
 
     console.log('Erasing local database...');
 
-    await clientRepository.delete({});
+    await systemPulseRepository.delete({});
     await eventRepository.delete({});
 
-    console.log('Fetching clients...');
-    const allClients = await api.fetchAllClients();
-    console.log(`${allClients.length} clients fetched! Inserting them in database...`);
+    console.log('Fetching systemPulses...');
+    const allSystemPulses = await api.fetchAllSystemPulses();
+    console.log(`${allSystemPulses.length} systemPulses fetched! Inserting them in database...`);
 
-    await clientRepository.insert(allClients);
-    console.log('Clients inserted! Now fetching events...');
+    await systemPulseRepository.insert(allSystemPulses);
+    console.log('SystemPulses inserted! Now fetching events...');
 
     const allEvents = await api.fetchAllEvents();
 
