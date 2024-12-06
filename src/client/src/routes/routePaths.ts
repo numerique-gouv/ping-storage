@@ -10,6 +10,7 @@ const ROUTE_PATHS: Record<(typeof ROUTE_KEYS)[number], { path: string }> = {
     SYSTEM_PULSES: {
         path: '/system-pulses',
     },
+    MONITORS: { path: '/monitors' },
 };
 
 export { ROUTE_PATHS };

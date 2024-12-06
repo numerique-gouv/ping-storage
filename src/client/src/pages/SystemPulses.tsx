@@ -1,16 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import { api } from '../lib/api';
+import { systemPulsesApi } from '../lib/api/systemPulsesApi';
 import { Link } from 'react-router-dom';
 import { pathHandler } from '../lib/pathHandler';
 
-type systemPulseType = {
-    id: string;
-    name: string;
-};
-
 function SystemPulses() {
-    const query = useQuery<systemPulseType[]>({
-        queryFn: api.getSystemPulses,
+    const query = useQuery({
+        queryFn: systemPulsesApi.getSystemPulses,
         queryKey: ['systemPulses'],
     });
 

@@ -1,22 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
-import { api } from '../lib/api';
-
-type statusValueType = 'up' | 'down';
-
-type eventType = { createdAt: string; kind: statusValueType; title: string; id: number };
-
-type systemPulseSummaryType = {
-    name: string;
-    status: statusValueType;
-    events: Array<eventType>;
-};
+import { systemPulsesApi } from '../lib/api/systemPulsesApi';
 
 function SystemPulseSummary() {
     const params = useParams<{ systemPulseId: string }>();
     const systemPulseId = params.systemPulseId as string;
-    const query = useQuery<systemPulseSummaryType>({
-        queryFn: () => api.getSystemPulseSummary(systemPulseId),
+    const query = useQuery({
+        queryFn: () => systemPulsesApi.getSystemPulseSummary(systemPulseId),
         queryKey: ['systemPulses', systemPulseId, 'summary'],
     });
 

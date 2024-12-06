@@ -4,6 +4,7 @@ const ROUTE_TITLES: Record<(typeof ROUTE_KEYS)[number], string> = {
     HOME: 'Accueil',
     SYSTEM_PULSES: 'Liste des pouls',
     SYSTEM_PULSE_SUMMARY: 'Résumé',
+    MONITORS: 'Monitors',
 };
 
 export { ROUTE_TITLES };

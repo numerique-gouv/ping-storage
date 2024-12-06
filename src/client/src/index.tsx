@@ -4,6 +4,8 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { Router } from './routes/Router';
 import { ThemeProvider } from '@mui/material';
+import { AlertHandlerContextProvider } from './lib/alert';
+
 import { theme } from './theme';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
@@ -12,9 +14,11 @@ const queryClient = new QueryClient();
 root.render(
     <ThemeProvider theme={theme}>
         <QueryClientProvider client={queryClient}>
-            <BrowserRouter>
-                <Router />
-            </BrowserRouter>
+            <AlertHandlerContextProvider>
+                <BrowserRouter>
+                    <Router />
+                </BrowserRouter>
+            </AlertHandlerContextProvider>
         </QueryClientProvider>
     </ThemeProvider>,
 );

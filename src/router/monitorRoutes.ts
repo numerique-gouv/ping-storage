@@ -10,7 +10,8 @@ const monitorRoutes: Array<routeType<any, any, any>> = [
         path: '/monitors',
         controller: monitorController.createMonitor,
         schema: Joi.object({
-            frequency: Joi.number().greater(1).required(),
+            frequency: Joi.number().greater(0).required(),
+            url: Joi.string().required(),
             name: Joi.string()
                 .required()
                 .regex(/^[a-zA-Z0-9-_]+$/),

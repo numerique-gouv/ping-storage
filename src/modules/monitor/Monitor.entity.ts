@@ -8,6 +8,9 @@ export class Monitor {
     @Column({ unique: true })
     name: string;
 
+    @Column()
+    url: string;
+
     @Column({ default: 10 })
     frequency: number;
 

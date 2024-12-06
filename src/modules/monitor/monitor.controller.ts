@@ -12,11 +12,12 @@ function buildMonitorController() {
     return monitorController;
 
     async function createMonitor(params: {
-        body: { name: Monitor['name']; frequency: Monitor['frequency'] };
+        body: { name: Monitor['name']; frequency: Monitor['frequency']; url: Monitor['url'] };
     }) {
         return monitorService.createMonitor({
             name: params.body.name,
             frequency: params.body.frequency,
+            url: params.body.url,
         });
     }
 }

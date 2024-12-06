@@ -14,9 +14,11 @@ function buildMonitorService() {
     async function createMonitor(params: {
         name: Monitor['name'];
         frequency: Monitor['frequency'];
+        url: Monitor['url'];
     }) {
         const result = await monitorRepository.insert({
             name: params.name,
+            url: params.url,
             frequency: params.frequency,
         });
         return { monitorId: result.identifiers[0].id };
