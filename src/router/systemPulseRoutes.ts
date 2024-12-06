@@ -7,7 +7,7 @@ const systemPulseController = buildSystemPulseController();
 const systemPulseRoutes: Array<routeType<any, any, any>> = [
     {
         method: 'POST',
-        path: '/systemPulses',
+        path: '/system-pulses',
         controller: systemPulseController.createSystemPulse,
         schema: Joi.object({
             name: Joi.string()
@@ -17,23 +17,23 @@ const systemPulseRoutes: Array<routeType<any, any, any>> = [
     },
     {
         method: 'GET',
-        path: '/systemPulses/:name/health',
+        path: '/system-pulses/:name/health',
         controller: systemPulseController.assertIsSystemPulseUpByName,
     },
 
     {
         method: 'GET',
-        path: '/systemPulses',
+        path: '/system-pulses',
         controller: systemPulseController.getSystemPulses,
     },
     {
         method: 'GET',
-        path: '/systemPulses/:systemPulseId/summary',
+        path: '/system-pulses/:systemPulseId/summary',
         controller: systemPulseController.getSystemPulseSummary,
     },
     {
         method: 'GET',
-        path: '/all-systemPulses',
+        path: '/all-system-pulses',
         controller: systemPulseController.getAllSystemPulses,
     },
     {

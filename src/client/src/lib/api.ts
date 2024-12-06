@@ -6,12 +6,12 @@ const api = { getSystemPulses, getSystemPulseSummary };
 const BASE_URL = `${config.API_URL}/api`;
 
 async function getSystemPulses() {
-    const URL = `${BASE_URL}/systemPulses`;
+    const URL = `${BASE_URL}/system-pulses`;
     return performApiCall(URL, 'GET');
 }
 
 async function getSystemPulseSummary(clientId: string) {
-    const URL = `${BASE_URL}/systemPulses/${clientId}/summary`;
+    const URL = `${BASE_URL}/system-pulses/${clientId}/summary`;
     return performApiCall(URL, 'GET');
 }
 
