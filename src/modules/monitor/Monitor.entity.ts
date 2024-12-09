@@ -9,6 +9,9 @@ export class Monitor {
     name: string;
 
     @Column()
+    displayName: string;
+
+    @Column()
     url: string;
 
     @Column({ default: 10 })

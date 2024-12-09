@@ -12,9 +12,7 @@ const monitorRoutes: Array<routeType<any, any, any>> = [
         schema: Joi.object({
             frequency: Joi.number().greater(0).required(),
             url: Joi.string().required(),
-            name: Joi.string()
-                .required()
-                .regex(/^[a-zA-Z0-9-_]+$/),
+            displayName: Joi.string().required(),
         }),
     },
 ];

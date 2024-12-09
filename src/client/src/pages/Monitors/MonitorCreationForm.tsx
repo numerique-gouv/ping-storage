@@ -6,7 +6,7 @@ import { monitorsApi } from '../../lib/api/monitorsApi';
 import { useAlert } from '../../lib/alert';
 
 function MonitorCreationForm() {
-    const [name, setName] = useState('');
+    const [displayName, setDisplayName] = useState('');
     const [url, setUrl] = useState('');
     const [frequency, setFrequency] = useState(10);
     const { displayAlert } = useAlert();
@@ -15,7 +15,7 @@ function MonitorCreationForm() {
         mutationFn: monitorsApi.createMonitor,
         onSuccess: () => {
             displayAlert({ text: 'Vous avez bien créé un monitor', variant: 'success' });
-            setName('');
+            setDisplayName('');
             setUrl('');
             setFrequency(10);
         },
@@ -26,7 +26,7 @@ function MonitorCreationForm() {
     });
     return (
         <form onSubmit={handleSubmit}>
-            <TextField label="Nom" value={name} onChange={onChangeName} />
+            <TextField label="Nom" value={displayName} onChange={onChangeName} />
             <TextField label="URL" value={url} onChange={onChangeUrl} />
             <TextField
                 label="Fréquence"
@@ -39,7 +39,7 @@ function MonitorCreationForm() {
     );
 
     function onChangeName(event: ChangeEvent<HTMLInputElement>) {
-        setName(event.target.value);
+        setDisplayName(event.target.value);
     }
 
     function onChangeUrl(event: ChangeEvent<HTMLInputElement>) {
@@ -54,7 +54,7 @@ function MonitorCreationForm() {
 
     function handleSubmit(event: FormEvent) {
         event.preventDefault();
-        createMonitorMutation.mutate({ name, frequency, url });
+        createMonitorMutation.mutate({ displayName, frequency, url });
     }
 }
 

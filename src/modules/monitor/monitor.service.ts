@@ -1,4 +1,5 @@
 import { dataSource } from '../../dataSource';
+import { slugify } from '../../lib/utils';
 import { buildMonitorEventService } from '../monitorEvent';
 import { Monitor } from './Monitor.entity';
 
@@ -16,12 +17,14 @@ function buildMonitorService() {
     return monitorService;
 
     async function createMonitor(params: {
-        name: Monitor['name'];
+        displayName: Monitor['displayName'];
         frequency: Monitor['frequency'];
         url: Monitor['url'];
     }) {
+        const name = slugify(params.displayName);
         const result = await monitorRepository.insert({
-            name: params.name,
+            displayName: params.displayName,
+            name,
             url: params.url,
             frequency: params.frequency,
         });
