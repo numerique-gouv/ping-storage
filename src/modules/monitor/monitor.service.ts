@@ -8,8 +8,9 @@ export { buildMonitorService };
 function buildMonitorService() {
     const monitorRepository = dataSource.getRepository(Monitor);
     const monitorService = {
-        createMonitor,
         getMonitors,
+        getMyMonitors,
+        createMonitor,
         computeShouldPingMonitor,
         pingMonitor,
     };
@@ -32,6 +33,10 @@ function buildMonitorService() {
     }
 
     async function getMonitors() {
+        return monitorRepository.find({});
+    }
+
+    async function getMyMonitors() {
         return monitorRepository.find({});
     }
 

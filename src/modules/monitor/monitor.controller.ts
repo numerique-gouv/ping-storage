@@ -6,10 +6,15 @@ export { buildMonitorController };
 function buildMonitorController() {
     const monitorService = buildMonitorService();
     const monitorController = {
+        getMyMonitors,
         createMonitor,
     };
 
     return monitorController;
+
+    async function getMyMonitors() {
+        return monitorService.getMyMonitors();
+    }
 
     async function createMonitor(params: {
         body: {
