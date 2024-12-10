@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from '../user';
 
 @Entity()
 export class SystemPulse {
@@ -16,4 +17,7 @@ export class SystemPulse {
 
     @Column({ type: 'timestamp', nullable: true })
     lastPingedAt: string | null;
+
+    @ManyToOne(() => User, { onDelete: 'CASCADE', nullable: true })
+    user: User;
 }
