@@ -8,11 +8,13 @@ const monitorRoutes: Array<routeType<any, any, any>> = [
     {
         method: 'GET',
         path: '/me/monitors',
+        kind: 'authenticated',
         controller: monitorController.getMyMonitors,
     },
     {
         method: 'POST',
         path: '/me/monitors',
+        kind: 'authenticated',
         controller: monitorController.createMonitor,
         schema: Joi.object({
             frequency: Joi.number().greater(0).required(),

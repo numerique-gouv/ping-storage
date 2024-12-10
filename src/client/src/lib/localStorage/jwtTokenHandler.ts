@@ -1,4 +1,4 @@
-const KEY = 'UPTIME_JWT_TOKEN';
+const KEY = 'SENTINEL_JWT_TOKEN';
 
 function get() {
     return localStorage.getItem(KEY) || undefined;

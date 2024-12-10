@@ -1,5 +1,6 @@
 import { jwtTokenHandler } from './jwtTokenHandler';
+import { userInfoHandler } from './userInfoHandler';
 
-const localStorage = { jwtTokenHandler };
+const localStorage = { jwtTokenHandler, userInfoHandler };
 
 export { localStorage };

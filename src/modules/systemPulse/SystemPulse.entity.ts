@@ -18,6 +18,6 @@ export class SystemPulse {
     @Column({ type: 'timestamp', nullable: true })
     lastPingedAt: string | null;
 
-    @ManyToOne(() => User, { onDelete: 'CASCADE', nullable: true })
+    @ManyToOne(() => User, { onDelete: 'CASCADE', nullable: false })
     user: User;
 }

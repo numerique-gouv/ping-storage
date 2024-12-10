@@ -11,6 +11,9 @@ const ROUTE_PATHS: Record<(typeof ROUTE_KEYS)[number], { path: string }> = {
         path: '/system-pulses',
     },
     MONITORS: { path: '/monitors' },
+    SIGN_IN: { path: '/sign-in' },
+    SIGN_UP: { path: '/sign-up' },
+    TERMS_AND_CONDITIONS_OF_SALE: { path: '/terms-and-conditions-of-sale' },
 };
 
 export { ROUTE_PATHS };

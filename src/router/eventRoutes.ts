@@ -8,6 +8,7 @@ const eventRoutes: Array<routeType<any, any, any>> = [
     {
         method: 'GET',
         path: '/all-events',
+        kind: 'public',
         controller: eventController.getAllEvents,
     },
 ];

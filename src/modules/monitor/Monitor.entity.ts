@@ -24,6 +24,6 @@ export class Monitor {
     @Column({ type: 'timestamp', nullable: true })
     lastCall: string | null;
 
-    @ManyToOne(() => User, { onDelete: 'CASCADE', nullable: true })
+    @ManyToOne(() => User, { onDelete: 'CASCADE', nullable: false })
     user: User;
 }
