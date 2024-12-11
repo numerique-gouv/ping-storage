@@ -19,6 +19,7 @@ function MonitorCreationForm() {
             setUrl('');
             setFrequency(10);
         },
+        queryKeyToInvalidate: ['me', 'monitors'],
         errorText: 'Une erreur est survenue lors de la création du monitor',
     });
     return (

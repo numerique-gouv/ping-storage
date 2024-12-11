@@ -7,9 +7,9 @@ type systemPulseType = {
     name: string;
 };
 
-async function getMySystemPulses(): Promise<systemPulseType[]> {
+async function getMySystemPulses() {
     const URI = `me/system-pulses`;
-    return performApiCall(URI, 'GET');
+    return performApiCall<systemPulseType[]>(URI, 'GET');
 }
 
 type statusValueType = 'up' | 'down';
@@ -22,9 +22,9 @@ type systemPulseSummaryType = {
     events: Array<eventType>;
 };
 
-async function getMySystemPulseSummary(clientId: string): Promise<systemPulseSummaryType> {
-    const URI = `me/system-pulses/${clientId}/summary`;
-    return performApiCall(URI, 'GET');
+async function getMySystemPulseSummary(systemPulseId: string) {
+    const URI = `me/system-pulses/${systemPulseId}/summary`;
+    return performApiCall<systemPulseSummaryType>(URI, 'GET');
 }
 
 export { systemPulsesApi };

@@ -4,7 +4,7 @@ import { Query } from '../../components/Query';
 
 function Monitors() {
     return (
-        <Query apiCall={monitorsApi.getMyMonitors} queryKey={['monitors']}>
+        <Query apiCall={monitorsApi.getMyMonitors} queryKey={['me', 'monitors']}>
             {(data) => (
                 <div>
                     <MonitorCreationForm />

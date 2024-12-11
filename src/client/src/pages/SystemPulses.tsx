@@ -5,7 +5,7 @@ import { Query } from '../components/Query';
 
 function SystemPulses() {
     return (
-        <Query apiCall={systemPulsesApi.getMySystemPulses} queryKey={['system-pulses']}>
+        <Query apiCall={systemPulsesApi.getMySystemPulses} queryKey={['me', 'system-pulses']}>
             {(data) => (
                 <div>
                     <ul>
