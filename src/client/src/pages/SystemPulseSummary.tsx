@@ -5,7 +5,7 @@ import { Query } from '../components/Query';
 function SystemPulseSummary() {
     const params = useParams<{ systemPulseId: string }>();
     const systemPulseId = params.systemPulseId as string;
-    const getSystemPulseSummary = () => systemPulsesApi.getSystemPulseSummary(systemPulseId);
+    const getSystemPulseSummary = () => systemPulsesApi.getMySystemPulseSummary(systemPulseId);
 
     return (
         <Query

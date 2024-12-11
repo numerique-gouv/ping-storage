@@ -1,3 +1,4 @@
+import { User } from '../user';
 import { SystemPulse } from './SystemPulse.entity';
 import { buildSystemPulseService } from './systemPulse.service';
 
@@ -9,8 +10,8 @@ function buildSystemPulseController() {
         createSystemPulse,
         assertIsSystemPulseUpByName,
         getAllSystemPulses,
-        getSystemPulses,
-        getSystemPulseSummary,
+        getMySystemPulses,
+        getMySystemPulseSummary,
         pingSystemPulse,
     };
 
@@ -30,17 +31,17 @@ function buildSystemPulseController() {
         return systemPulseService.getAllSystemPulses();
     }
 
-    async function getSystemPulses() {
-        return systemPulseService.getAllSystemPulses();
+    async function getMySystemPulses(_params: {}, user: User) {
+        return systemPulseService.getMySystemPulses(user);
     }
 
     async function pingSystemPulse(params: { urlParams: { systemPulseId: SystemPulse['id'] } }) {
         return systemPulseService.pingSystemPulse(params.urlParams.systemPulseId);
     }
 
-    async function getSystemPulseSummary(params: {
+    async function getMySystemPulseSummary(params: {
         urlParams: { systemPulseId: SystemPulse['id'] };
     }) {
-        return systemPulseService.getSystemPulseSummary(params.urlParams.systemPulseId);
+        return systemPulseService.getMySystemPulseSummary(params.urlParams.systemPulseId);
     }
 }

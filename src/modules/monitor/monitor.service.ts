@@ -1,6 +1,7 @@
 import { dataSource } from '../../dataSource';
 import { slugify } from '../../lib/utils';
 import { buildMonitorEventService } from '../monitorEvent';
+import { User } from '../user';
 import { Monitor } from './Monitor.entity';
 
 export { buildMonitorService };
@@ -21,6 +22,7 @@ function buildMonitorService() {
         displayName: Monitor['displayName'];
         frequency: Monitor['frequency'];
         url: Monitor['url'];
+        user: User;
     }) {
         const name = slugify(params.displayName);
         const result = await monitorRepository.insert({
@@ -28,6 +30,7 @@ function buildMonitorService() {
             name,
             url: params.url,
             frequency: params.frequency,
+            user: params.user,
         });
         return { monitorId: result.identifiers[0].id };
     }
@@ -36,8 +39,8 @@ function buildMonitorService() {
         return monitorRepository.find({});
     }
 
-    async function getMyMonitors() {
-        return monitorRepository.find({});
+    async function getMyMonitors(user: User) {
+        return monitorRepository.find({ where: { user } });
     }
 
     async function pingMonitor(monitor: Monitor) {

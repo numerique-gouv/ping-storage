@@ -1,3 +1,4 @@
+import { User } from '../user';
 import { Monitor } from './Monitor.entity';
 import { buildMonitorService } from './monitor.service';
 
@@ -12,21 +13,25 @@ function buildMonitorController() {
 
     return monitorController;
 
-    async function getMyMonitors() {
-        return monitorService.getMyMonitors();
+    async function getMyMonitors(_params: {}, user: User) {
+        return monitorService.getMyMonitors(user);
     }
 
-    async function createMonitor(params: {
-        body: {
-            displayName: Monitor['displayName'];
-            frequency: Monitor['frequency'];
-            url: Monitor['url'];
-        };
-    }) {
+    async function createMonitor(
+        params: {
+            body: {
+                displayName: Monitor['displayName'];
+                frequency: Monitor['frequency'];
+                url: Monitor['url'];
+            };
+        },
+        user: User,
+    ) {
         return monitorService.createMonitor({
             displayName: params.body.displayName,
             frequency: params.body.frequency,
             url: params.body.url,
+            user,
         });
     }
 }

@@ -25,15 +25,15 @@ const systemPulseRoutes: Array<routeType<any, any, any>> = [
 
     {
         method: 'GET',
-        path: '/system-pulses',
+        path: '/me/system-pulses',
         kind: 'authenticated',
-        controller: systemPulseController.getSystemPulses,
+        controller: systemPulseController.getMySystemPulses,
     },
     {
         method: 'GET',
         kind: 'authenticated',
-        path: '/system-pulses/:systemPulseId/summary',
-        controller: systemPulseController.getSystemPulseSummary,
+        path: '/me/system-pulses/:systemPulseId/summary',
+        controller: systemPulseController.getMySystemPulseSummary,
     },
     {
         method: 'GET',

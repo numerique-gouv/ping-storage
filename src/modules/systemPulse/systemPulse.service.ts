@@ -1,6 +1,7 @@
 import { dataSource } from '../../dataSource';
 import { buildEventService } from '../event';
 import { eventKindType } from '../event/types';
+import { User } from '../user';
 import { SystemPulse } from './SystemPulse.entity';
 
 export { buildSystemPulseService };
@@ -12,7 +13,8 @@ function buildSystemPulseService() {
         createSystemPulse,
         assertIsSystemPulseUpByName,
         getAllSystemPulses,
-        getSystemPulseSummary,
+        getMySystemPulses,
+        getMySystemPulseSummary,
         pingSystemPulse,
         checkAllSystemPulses,
     };
@@ -21,6 +23,10 @@ function buildSystemPulseService() {
 
     async function getAllSystemPulses() {
         return systemPulseRepository.find({});
+    }
+
+    async function getMySystemPulses(user: User) {
+        return systemPulseRepository.find({ where: { user } });
     }
 
     async function createSystemPulse(name: SystemPulse['name']) {
@@ -120,7 +126,7 @@ function buildSystemPulseService() {
         }
     }
 
-    async function getSystemPulseSummary(systemPulseId: SystemPulse['id']) {
+    async function getMySystemPulseSummary(systemPulseId: SystemPulse['id']) {
         const systemPulse = await systemPulseRepository.findOneByOrFail({ id: systemPulseId });
         const events = await eventService.getEventsForSystemPulse(systemPulseId);
         const status = await getSystemPulseStatus(systemPulse);

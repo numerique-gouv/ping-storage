@@ -1,15 +1,15 @@
 import { BASE_URL } from './constants';
 import { performApiCall } from './utils';
 
-const systemPulsesApi = { getSystemPulses, getSystemPulseSummary };
+const systemPulsesApi = { getMySystemPulses, getMySystemPulseSummary };
 
 type systemPulseType = {
     id: string;
     name: string;
 };
 
-async function getSystemPulses(): Promise<systemPulseType[]> {
-    const URL = `${BASE_URL}/system-pulses`;
+async function getMySystemPulses(): Promise<systemPulseType[]> {
+    const URL = `${BASE_URL}/me/system-pulses`;
     return performApiCall(URL, 'GET');
 }
 
@@ -23,8 +23,8 @@ type systemPulseSummaryType = {
     events: Array<eventType>;
 };
 
-async function getSystemPulseSummary(clientId: string): Promise<systemPulseSummaryType> {
-    const URL = `${BASE_URL}/system-pulses/${clientId}/summary`;
+async function getMySystemPulseSummary(clientId: string): Promise<systemPulseSummaryType> {
+    const URL = `${BASE_URL}/me/system-pulses/${clientId}/summary`;
     return performApiCall(URL, 'GET');
 }
 
