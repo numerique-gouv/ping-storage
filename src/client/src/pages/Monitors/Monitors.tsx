@@ -1,6 +1,8 @@
 import { monitorsApi } from '../../lib/api/monitorsApi';
 import { MonitorCreationForm } from './MonitorCreationForm';
 import { Query } from '../../components/Query';
+import { Link } from '../../components/Link';
+import { pathHandler } from '../../lib/pathHandler';
 
 function Monitors() {
     return (
@@ -10,7 +12,15 @@ function Monitors() {
                     <MonitorCreationForm />
                     <ul>
                         {data.map((monitor) => (
-                            <li key={monitor.id}>{monitor.displayName}</li>
+                            <li key={monitor.id}>
+                                <Link
+                                    to={pathHandler.getRoutePath('MONITOR_SUMMARY', {
+                                        monitorId: monitor.id,
+                                    })}
+                                >
+                                    {monitor.displayName}
+                                </Link>
+                            </li>
                         ))}
                     </ul>
                 </div>

@@ -6,6 +6,7 @@ const ROUTE_KEYS = [
     'SIGN_IN',
     'SIGN_UP',
     'MONITORS',
+    'MONITOR_SUMMARY',
 ] as const;
 
 export { ROUTE_KEYS };

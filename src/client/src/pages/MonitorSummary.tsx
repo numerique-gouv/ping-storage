@@ -1,17 +1,14 @@
 import { useParams } from 'react-router-dom';
-import { systemPulsesApi } from '../lib/api/systemPulsesApi';
+import { monitorsApi } from '../lib/api/monitorsApi';
 import { Query } from '../components/Query';
 
-function SystemPulseSummary() {
-    const params = useParams<{ systemPulseId: string }>();
-    const systemPulseId = params.systemPulseId as string;
-    const getSystemPulseSummary = () => systemPulsesApi.getMySystemPulseSummary(systemPulseId);
+function MonitorSummary() {
+    const params = useParams<{ monitorId: string }>();
+    const monitorId = params.monitorId as string;
+    const getMonitorSummary = () => monitorsApi.getMyMonitorSummary(monitorId);
 
     return (
-        <Query
-            apiCall={getSystemPulseSummary}
-            queryKey={['me', 'system-pulses', systemPulseId, 'summary']}
-        >
+        <Query apiCall={getMonitorSummary} queryKey={['me', 'monitors', monitorId, 'summary']}>
             {(data) => (
                 <div>
                     <h1>{data.name}</h1>
@@ -30,4 +27,4 @@ function SystemPulseSummary() {
     );
 }
 
-export { SystemPulseSummary };
+export { MonitorSummary };
