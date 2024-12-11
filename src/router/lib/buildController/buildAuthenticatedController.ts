@@ -68,9 +68,9 @@ function buildAuthenticatedController<
             );
             res.setHeader('Content-Type', 'application/json');
             res.send(result);
-        } catch (error) {
+        } catch (error: any) {
             logger.error(error);
-            res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
+            res.status(httpStatus.INTERNAL_SERVER_ERROR).send(error.message);
         }
     };
 }

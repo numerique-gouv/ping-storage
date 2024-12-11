@@ -16,7 +16,6 @@ function SignIn() {
 
     const loginApiCall = useApiCall({
         apiCall: usersApi.login,
-        errorText: 'Une erreur est survenue lors de la connexion',
         onSuccess: (data) => {
             const { token, userInfo } = data;
             localSessionHandler.setToken(token);

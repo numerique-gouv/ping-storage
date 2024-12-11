@@ -14,6 +14,13 @@ function buildAlertSubscriptionService() {
     return alertSubscriptionService;
 
     async function createAlertSubscription(params: { email: string; monitorId: Monitor['id'] }) {
+        const isAlreadySubscribed = await alertSubscriptionRepository.existsBy({
+            email: params.email,
+            monitor: { id: params.monitorId },
+        });
+        if (isAlreadySubscribed) {
+            throw new Error(`Vous avez déjà souscrit à cette alerte.`);
+        }
         const result = await alertSubscriptionRepository.insert({
             email: params.email,
             monitor: { id: params.monitorId },

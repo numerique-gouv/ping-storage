@@ -5,7 +5,6 @@ function useApiCall<apiCallParamsT, apiCallDataT>(props: {
     apiCall: (params: apiCallParamsT) => Promise<apiCallDataT>;
     queryKeyToInvalidate?: string[];
     onSuccess: (data: apiCallDataT) => void;
-    errorText: string;
     successText?: string;
 }) {
     const client = useQueryClient();
@@ -25,7 +24,7 @@ function useApiCall<apiCallParamsT, apiCallDataT>(props: {
             console.error(error);
             displayAlert({
                 variant: 'error',
-                text: props.errorText,
+                text: error.message,
             });
         },
     });

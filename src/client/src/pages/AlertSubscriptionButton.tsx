@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { alertSubscriptionsApi } from '../lib/api/alertSubscriptionsApi';
 import { useApiCall } from '../lib/useApiCall';
 import { locale } from '../locale';
@@ -13,7 +13,6 @@ function AlertSubscriptionButton(props: { monitorId: string }) {
     const createAlertSubscriptionApiCall = useApiCall({
         apiCall: alertSubscriptionsApi.createAlertSubscription,
         successText: 'Vous avez bien souscrit à cette alerte.',
-        errorText: 'Une erreur est survenue',
         onSuccess: () => {
             setEmail('');
             setAnchorEl(null);
@@ -25,7 +24,7 @@ function AlertSubscriptionButton(props: { monitorId: string }) {
                 {locale.monitorSummary.alertSubscriptionButton.label}
             </Button>
             <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={closeMenu}>
-                <MenuContent>
+                <MenuContent onSubmit={subscribe}>
                     <Title variant="h4">
                         {locale.monitorSummary.alertSubscriptionButton.menu.title}
                     </Title>
@@ -42,11 +41,11 @@ function AlertSubscriptionButton(props: { monitorId: string }) {
                         />
                     </TextFieldContainer>
                     <Button
+                        type="submit"
                         isLoading={createAlertSubscriptionApiCall.isLoading}
                         disabled={!email}
                         fullWidth
                         variant="contained"
-                        onClick={subscribe}
                     >
                         {locale.monitorSummary.alertSubscriptionButton.menu.button}
                     </Button>
@@ -59,7 +58,9 @@ function AlertSubscriptionButton(props: { monitorId: string }) {
         setAnchorEl(event.currentTarget);
     }
 
-    function subscribe() {
+    function subscribe(event: FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+
         createAlertSubscriptionApiCall.perform({ email, monitorId: props.monitorId });
     }
 
@@ -71,7 +72,7 @@ function AlertSubscriptionButton(props: { monitorId: string }) {
 const Title = styled(Typography)(({ theme }) => ({ marginBottom: theme.spacing(1) }));
 const Subtitle = styled(Typography)(({ theme }) => ({ marginBottom: theme.spacing(2) }));
 const TextFieldContainer = styled('div')(({ theme }) => ({ marginBottom: theme.spacing(1) }));
-const MenuContent = styled('div')(({ theme }) => ({
+const MenuContent = styled('form')(({ theme }) => ({
     padding: theme.spacing(3),
     width: MENU_WIDTH,
 }));

@@ -17,7 +17,6 @@ function SignUp() {
 
     const createUserApiCall = useApiCall({
         apiCall: usersApi.createUser,
-        errorText: 'Une erreur est survenue lors de la création de compte',
         onSuccess: (data) => {
             const { token, userInfo } = data;
             localSessionHandler.setToken(token);
