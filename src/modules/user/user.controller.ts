@@ -1,4 +1,3 @@
-import { User } from './User.entity';
 import { buildUserService } from './user.service';
 
 export { buildUserController };
@@ -12,9 +11,7 @@ function buildUserController() {
 
     return userController;
 
-    async function createUser(params: {
-        body: { email: string; password: string; establishmentName: string; classeName: string };
-    }) {
+    async function createUser(params: { body: { email: string; password: string } }) {
         return userService.createUser(params.body);
     }
 

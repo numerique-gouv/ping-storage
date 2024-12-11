@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { monitorsApi } from '../lib/api/monitorsApi';
 import { Query } from '../components/Query';
+import { AlertSubscriptionButton } from './AlertSubscriptionButton';
 
 function MonitorSummary() {
     const params = useParams<{ monitorId: string }>();
@@ -8,22 +9,25 @@ function MonitorSummary() {
     const getMonitorSummary = () => monitorsApi.getMyMonitorSummary(monitorId);
 
     return (
-        <Query apiCall={getMonitorSummary} queryKey={['me', 'monitors', monitorId, 'summary']}>
-            {(data) => (
-                <div>
-                    <h1>{data.name}</h1>
-                    <h2>{data.status}</h2>
-                    <h3>Évènements</h3>
-                    <ul>
-                        {data.events.map((event) => (
-                            <li key={`event-${event.id}`}>
-                                <strong>{event.kind}</strong> - {event.title}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
-        </Query>
+        <>
+            <AlertSubscriptionButton monitorId={monitorId} />
+            <Query apiCall={getMonitorSummary} queryKey={['me', 'monitors', monitorId, 'summary']}>
+                {(data) => (
+                    <div>
+                        <h1>{data.name}</h1>
+                        <h2>{data.status}</h2>
+                        <h3>Évènements</h3>
+                        <ul>
+                            {data.events.map((event) => (
+                                <li key={`event-${event.id}`}>
+                                    <strong>{event.kind}</strong> - {event.title}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
+            </Query>
+        </>
     );
 }
 
