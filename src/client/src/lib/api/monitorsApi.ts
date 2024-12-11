@@ -1,4 +1,3 @@
-import { BASE_URL } from './constants';
 import { performApiCall } from './utils';
 
 const monitorsApi = { getMyMonitors, createMonitor };
@@ -8,15 +7,15 @@ async function createMonitor(params: {
     frequency: number;
     url: string;
 }): Promise<monitorType> {
-    const URL = `${BASE_URL}/me/monitors`;
-    return performApiCall(URL, 'POST', params);
+    const URI = `me/monitors`;
+    return performApiCall(URI, 'POST', params);
 }
 
 type monitorType = { id: string; name: string; displayName: string };
 
 async function getMyMonitors(): Promise<monitorType[]> {
-    const URL = `${BASE_URL}/me/monitors`;
-    return performApiCall(URL, 'GET');
+    const URI = `me/monitors`;
+    return performApiCall(URI, 'GET');
 }
 
 export { monitorsApi };

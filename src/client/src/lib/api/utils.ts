@@ -1,10 +1,12 @@
 import { localStorage } from '../localStorage';
+import { BASE_URL } from './constants';
 
 async function performApiCall(
-    url: string,
+    uri: string,
     method: 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE',
     body?: Object,
 ) {
+    const url = `${BASE_URL}/${uri}`;
     let response: Response;
     const token = localStorage.jwtTokenHandler.get();
 
