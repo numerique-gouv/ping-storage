@@ -1,22 +1,22 @@
-import { SystemPulse } from '../modules/systemPulse';
-import { Event } from '../modules/event';
+import { Monitor } from '../modules/monitor';
+import { MonitorEvent } from '../modules/monitorEvent';
 
 const api = {
-    fetchAllSystemPulses,
-    fetchAllEvents,
+    fetchAllMonitors,
+    fetchAllMonitorEvents,
 };
 const BASE_URL = 'https://ping-storage.osc-fr1.scalingo.io';
 
-async function fetchAllSystemPulses(): Promise<SystemPulse[]> {
-    const URL = `${BASE_URL}/api/all-system-pulses`;
+async function fetchAllMonitors(): Promise<Monitor[]> {
+    const URL = `${BASE_URL}/api/all-monitors`;
 
     const response = await fetch(URL);
     const parsedData = await response.json();
     return parsedData;
 }
 
-async function fetchAllEvents(): Promise<Event[]> {
-    const URL = `${BASE_URL}/api/all-events`;
+async function fetchAllMonitorEvents(): Promise<MonitorEvent[]> {
+    const URL = `${BASE_URL}/api/all-monitor-events`;
 
     const response = await fetch(URL);
     const parsedData = await response.json();

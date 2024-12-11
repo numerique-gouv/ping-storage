@@ -1,33 +1,33 @@
 import { dataSource } from '../dataSource';
 import { api } from '../lib/api';
-import { SystemPulse } from '../modules/systemPulse';
-import { Event } from '../modules/event';
+import { Monitor } from '../modules/monitor';
+import { MonitorEvent } from '../modules/monitorEvent';
 
 async function importDb() {
     console.log('Initializing database...');
     await dataSource.initialize();
     console.log('Database initialized!');
-    const systemPulseRepository = dataSource.getRepository(SystemPulse);
-    const eventRepository = dataSource.getRepository(Event);
+    const monitorRepository = dataSource.getRepository(Monitor);
+    const monitorEventRepository = dataSource.getRepository(MonitorEvent);
 
     console.log('Erasing local database...');
 
-    await systemPulseRepository.delete({});
-    await eventRepository.delete({});
+    await monitorRepository.delete({});
+    await monitorEventRepository.delete({});
 
-    console.log('Fetching systemPulses...');
-    const allSystemPulses = await api.fetchAllSystemPulses();
-    console.log(`${allSystemPulses.length} systemPulses fetched! Inserting them in database...`);
+    console.log('Fetching monitors...');
+    const allMonitors = await api.fetchAllMonitors();
+    console.log(`${allMonitors.length} monitors fetched! Inserting them in database...`);
 
-    await systemPulseRepository.insert(allSystemPulses);
-    console.log('SystemPulses inserted! Now fetching events...');
+    await monitorRepository.insert(allMonitors);
+    console.log('Monitors inserted! Now fetching events...');
 
-    const allEvents = await api.fetchAllEvents();
+    const allMonitorEvents = await api.fetchAllMonitorEvents();
 
-    console.log(`${allEvents.length} events fetched! Inserting them in database...`);
+    console.log(`${allMonitorEvents.length} events fetched! Inserting them in database...`);
 
-    await eventRepository.insert(allEvents);
-    console.log(`${allEvents.length} events inserted!`);
+    await monitorEventRepository.insert(allMonitorEvents);
+    console.log(`${allMonitorEvents.length} events inserted!`);
 
     console.log('Done!');
 }
