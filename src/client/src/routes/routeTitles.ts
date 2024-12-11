@@ -2,8 +2,6 @@ import { ROUTE_KEYS } from './routeKeys';
 
 const ROUTE_TITLES: Record<(typeof ROUTE_KEYS)[number], string> = {
     HOME: 'Accueil',
-    SYSTEM_PULSES: 'Liste des pouls',
-    SYSTEM_PULSE_SUMMARY: 'Résumé',
     MONITORS: 'Monitors',
     MONITOR_SUMMARY: 'Résumé de monitor',
     SIGN_IN: 'Connexion',

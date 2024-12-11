@@ -2,7 +2,7 @@ import { Monitor } from '../monitor/Monitor.entity';
 import { MonitorEvent } from './MonitorEvent.entity';
 import { buildMonitorEventService } from './monitorEvent.service';
 
-describe('systemPulse.service', () => {
+describe('monitorEvent.service', () => {
     describe('aggregateEvents', () => {
         const monitorEventService = buildMonitorEventService();
         it('should return undefined if no events', () => {

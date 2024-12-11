@@ -4,12 +4,6 @@ const ROUTE_PATHS: Record<(typeof ROUTE_KEYS)[number], { path: string }> = {
     HOME: {
         path: '/',
     },
-    SYSTEM_PULSE_SUMMARY: {
-        path: '/system-pulses/:systemPulseId',
-    },
-    SYSTEM_PULSES: {
-        path: '/system-pulses',
-    },
     MONITORS: { path: '/monitors' },
     MONITOR_SUMMARY: {
         path: '/monitors/:monitorId',
