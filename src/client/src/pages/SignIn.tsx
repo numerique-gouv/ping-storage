@@ -1,7 +1,5 @@
 import { TextField, Typography, styled } from '@mui/material';
 import { FormEvent, useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
-import { useAlert } from '../lib/alert';
 import { useNavigate } from 'react-router-dom';
 import { Card } from '../components/Card';
 // import { Link } from '../components/Link';
@@ -9,28 +7,22 @@ import { pathHandler } from '../lib/pathHandler';
 import { LoadingButton } from '@mui/lab';
 import { usersApi } from '../lib/api/usersApi';
 import { localSessionHandler } from '../lib/localSessionHandler';
+import { useApiCall } from '../lib/useApiCall';
 
 function SignIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const { displayAlert } = useAlert();
-
-    const mutation = useMutation({
-        mutationFn: usersApi.login,
+    const loginApiCall = useApiCall({
+        apiCall: usersApi.login,
+        errorText: 'Une erreur est survenue lors de la connexion',
         onSuccess: (data) => {
             const { token, userInfo } = data;
             localSessionHandler.setToken(token);
             localSessionHandler.setUserInfo(userInfo);
 
             navigate(pathHandler.getRoutePath('HOME'));
-        },
-        onError: () => {
-            displayAlert({
-                variant: 'error',
-                text: 'Une erreur est survenue.',
-            });
         },
     });
 
@@ -73,7 +65,7 @@ function SignIn() {
                         </FieldsContainer>
 
                         <LoadingButton
-                            loading={mutation.isPending}
+                            loading={loginApiCall.isLoading}
                             type="submit"
                             variant="contained"
                             disabled={!password || !email}
@@ -87,7 +79,7 @@ function SignIn() {
     );
 
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
-        mutation.mutate({ email, password });
+        loginApiCall.perform({ email, password });
         event.preventDefault();
     }
 }

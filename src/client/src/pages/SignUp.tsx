@@ -1,7 +1,5 @@
 import { Checkbox, FormControlLabel, TextField, Typography, styled } from '@mui/material';
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
-import { useAlert } from '../lib/alert';
 import { useNavigate } from 'react-router-dom';
 import { Card } from '../components/Card';
 import { pathHandler } from '../lib/pathHandler';
@@ -9,6 +7,7 @@ import { LoadingButton } from '@mui/lab';
 import { usersApi } from '../lib/api/usersApi';
 import { Link } from 'react-router-dom';
 import { localSessionHandler } from '../lib/localSessionHandler';
+import { useApiCall } from '../lib/useApiCall';
 
 function SignUp() {
     const [email, setEmail] = useState('');
@@ -16,22 +15,15 @@ function SignUp() {
     const [isCGVChecked, setIsCGVChecked] = useState(false);
     const navigate = useNavigate();
 
-    const { displayAlert } = useAlert();
-
-    const mutation = useMutation({
-        mutationFn: usersApi.createUser,
+    const createUserApiCall = useApiCall({
+        apiCall: usersApi.createUser,
+        errorText: 'Une erreur est survenue lors de la création de compte',
         onSuccess: (data) => {
             const { token, userInfo } = data;
             localSessionHandler.setToken(token);
             localSessionHandler.setUserInfo(userInfo);
 
             navigate(pathHandler.getRoutePath('HOME'));
-        },
-        onError: () => {
-            displayAlert({
-                variant: 'error',
-                text: 'Une erreur est survenue.',
-            });
         },
     });
 
@@ -93,7 +85,7 @@ function SignUp() {
                         </FieldsContainer>
 
                         <LoadingButton
-                            loading={mutation.isPending}
+                            loading={createUserApiCall.isLoading}
                             type="submit"
                             variant="contained"
                             disabled={!password || !email || !isCGVChecked}
@@ -107,7 +99,7 @@ function SignUp() {
     );
 
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
-        mutation.mutate({ email, password });
+        createUserApiCall.perform({ email, password });
         event.preventDefault();
     }
 

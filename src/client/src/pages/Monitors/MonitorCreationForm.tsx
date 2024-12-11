@@ -1,9 +1,9 @@
 import { TextField } from '@mui/material';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { Button } from '../../components/Button';
-import { useMutation } from '@tanstack/react-query';
 import { monitorsApi } from '../../lib/api/monitorsApi';
 import { useAlert } from '../../lib/alert';
+import { useApiCall } from '../../lib/useApiCall';
 
 function MonitorCreationForm() {
     const [displayName, setDisplayName] = useState('');
@@ -11,18 +11,15 @@ function MonitorCreationForm() {
     const [frequency, setFrequency] = useState(10);
     const { displayAlert } = useAlert();
 
-    const createMonitorMutation = useMutation({
-        mutationFn: monitorsApi.createMonitor,
+    const createMonitorApiCall = useApiCall({
+        apiCall: monitorsApi.createMonitor,
         onSuccess: () => {
             displayAlert({ text: 'Vous avez bien créé un monitor', variant: 'success' });
             setDisplayName('');
             setUrl('');
             setFrequency(10);
         },
-        onError: (error) => {
-            console.error(error);
-            displayAlert({ text: 'Une erreur est survenue', variant: 'error' });
-        },
+        errorText: 'Une erreur est survenue lors de la création du monitor',
     });
     return (
         <form onSubmit={handleSubmit}>
@@ -34,7 +31,9 @@ function MonitorCreationForm() {
                 value={frequency}
                 onChange={onChangeFrequency}
             />
-            <Button type="submit">Créer un monitor</Button>
+            <Button isLoading={createMonitorApiCall.isLoading} type="submit">
+                Créer un monitor
+            </Button>
         </form>
     );
 
@@ -54,7 +53,7 @@ function MonitorCreationForm() {
 
     function handleSubmit(event: FormEvent) {
         event.preventDefault();
-        createMonitorMutation.mutate({ displayName, frequency, url });
+        createMonitorApiCall.perform({ displayName, frequency, url });
     }
 }
 

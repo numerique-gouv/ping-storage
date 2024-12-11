@@ -25,14 +25,19 @@ function buildMonitorService() {
         user: User;
     }) {
         const name = slugify(params.displayName);
-        const result = await monitorRepository.insert({
+        const monitor = new Monitor();
+        monitor.displayName = params.displayName;
+        monitor.name = name;
+        monitor.url = params.url;
+        monitor.frequency = params.frequency;
+        monitor.user = params.user;
+        return monitorRepository.save({
             displayName: params.displayName,
             name,
             url: params.url,
             frequency: params.frequency,
             user: params.user,
         });
-        return { monitorId: result.identifiers[0].id };
     }
 
     async function getMonitors() {
