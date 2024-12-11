@@ -1,11 +1,11 @@
 {
     "jobs": [
         {
-            "command": "*/10 * * * * npm run script:checkSystemPulses",
+            "command": "*/10 * * * * npm run script:checkCronMonitors",
             "size": "S"
         },
         {
-            "command": "*/10 * * * * npm run script:pingMonitors",
+            "command": "*/10 * * * * npm run script:pingAppMonitors",
             "size": "S"
         }
     ]

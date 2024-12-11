@@ -22,6 +22,24 @@ const monitorRoutes: Array<routeType<any, any, any>> = [
             displayName: Joi.string().required(),
         }),
     },
+    {
+        method: 'GET',
+        kind: 'authenticated',
+        path: '/me/monitors/:monitorId/summary',
+        controller: monitorController.getMyMonitorSummary,
+    },
+    {
+        method: 'POST',
+        kind: 'public',
+        path: '/clients/:cronMonitorId/pings',
+        controller: monitorController.pingCronMonitor,
+    },
+    {
+        method: 'GET',
+        kind: 'public',
+        path: '/monitors/:monitorName/health',
+        controller: monitorController.assertIsMonitorUpByName,
+    },
 ];
 
 export { monitorRoutes };

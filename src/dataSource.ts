@@ -1,8 +1,6 @@
 import { DataSource } from 'typeorm';
 import { config } from './config';
 
-import { SystemPulse } from './modules/systemPulse';
-import { Event } from './modules/event';
 import { Monitor } from './modules/monitor';
 import { MonitorEvent } from './modules/monitorEvent';
 import { User } from './modules/user';
@@ -16,7 +14,7 @@ const dataSource = new DataSource({
     database: config.DATABASE_NAME,
     logging: ['warn', 'error'],
     connectTimeoutMS: 20000,
-    entities: [SystemPulse, Event, Monitor, MonitorEvent, User],
+    entities: [Monitor, MonitorEvent, User],
     subscribers: [],
     migrations: ['**/migrations/*.js'],
 });

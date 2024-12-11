@@ -1,9 +1,9 @@
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Monitor } from '../monitor';
-import { EVENT_KINDS, eventKindType, genericEvent } from '../genericEvent/types';
+import { EVENT_KINDS, eventKindType } from './types';
 
 @Entity()
-export class MonitorEvent implements genericEvent {
+export class MonitorEvent {
     @PrimaryGeneratedColumn()
     id: number;
 

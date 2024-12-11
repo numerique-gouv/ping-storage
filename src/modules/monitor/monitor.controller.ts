@@ -7,14 +7,29 @@ export { buildMonitorController };
 function buildMonitorController() {
     const monitorService = buildMonitorService();
     const monitorController = {
+        assertIsMonitorUpByName,
         getMyMonitors,
+        getMyMonitorSummary,
+        pingCronMonitor,
         createMonitor,
     };
 
     return monitorController;
 
+    async function assertIsMonitorUpByName(params: { urlParams: { monitorName: string } }) {
+        return monitorService.assertIsMonitorUpByName(params.urlParams.monitorName);
+    }
+
+    async function getMyMonitorSummary(params: { urlParams: { monitorId: string } }) {
+        return monitorService.getMyMonitorSummary(params.urlParams.monitorId);
+    }
+
     async function getMyMonitors(_params: {}, user: User) {
         return monitorService.getMyMonitors(user);
+    }
+
+    async function pingCronMonitor(params: { urlParams: { cronMonitorId: string } }) {
+        return monitorService.pingCronMonitor(params.urlParams.cronMonitorId);
     }
 
     async function createMonitor(
