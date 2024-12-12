@@ -1,4 +1,5 @@
 import { dataSource } from '../../dataSource';
+import { mailer } from '../../lib/mailer';
 import { Monitor } from '../monitor';
 import { AlertSubscription } from './AlertSubscription.entity';
 
@@ -21,6 +22,8 @@ function buildAlertSubscriptionService() {
         if (isAlreadySubscribed) {
             throw new Error(`Vous avez déjà souscrit à cette alerte.`);
         }
+        await mailer.registerContact(params.email);
+
         const result = await alertSubscriptionRepository.insert({
             email: params.email,
             monitor: { id: params.monitorId },
