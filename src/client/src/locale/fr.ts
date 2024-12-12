@@ -1,4 +1,14 @@
 const fr = {
+    importFrom: {
+        uptimeRobot: {
+            fetchMonitorsButton: 'Récupérer les monitors',
+        },
+    },
+    monitors: {
+        importMonitorsButton: {
+            label: 'Importer depuis...',
+        },
+    },
     monitorSummary: {
         alertSubscriptionButton: {
             label: 'Souscrire',

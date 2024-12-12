@@ -4,6 +4,7 @@ const ROUTE_PATHS: Record<(typeof ROUTE_KEYS)[number], { path: string }> = {
     HOME: {
         path: '/',
     },
+    IMPORT_FROM_UPTIME_ROBOT: { path: '/monitors/import/uptime-robot' },
     MONITORS: { path: '/monitors' },
     MONITOR_SUMMARY: {
         path: '/monitors/:monitorId',
