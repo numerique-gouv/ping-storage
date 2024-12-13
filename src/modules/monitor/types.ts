@@ -1,5 +1,11 @@
 import { User } from '../user';
 
+type appMonitorDtoType = {
+    displayName: string;
+    url: string;
+    frequency: number;
+};
+
 type appMonitorType = {
     kind: 'app';
     id: string;
@@ -24,4 +30,4 @@ type cronMonitorType = {
     user: User;
 };
 
-export type { appMonitorType, cronMonitorType };
+export type { appMonitorType, cronMonitorType, appMonitorDtoType };

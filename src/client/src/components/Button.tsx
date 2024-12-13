@@ -12,7 +12,6 @@ function Button(props: {
     title?: string;
     startIcon?: JSX.Element;
     endIcon?: JSX.Element;
-    autoFocus?: boolean;
     isLoading?: boolean;
     color?: 'primary' | 'error' | 'inherit' | 'success' | 'warning';
 }) {
@@ -21,7 +20,6 @@ function Button(props: {
             <LoadingButton
                 loading={props.isLoading}
                 color={props.color}
-                autoFocus={props.autoFocus}
                 title={props.title}
                 startIcon={props.startIcon}
                 endIcon={props.endIcon}
@@ -38,7 +36,6 @@ function Button(props: {
     return (
         <MuiButton
             color={props.color}
-            autoFocus={props.autoFocus}
             title={props.title}
             startIcon={props.startIcon}
             endIcon={props.endIcon}

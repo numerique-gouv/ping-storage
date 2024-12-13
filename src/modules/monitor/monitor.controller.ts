@@ -11,7 +11,8 @@ function buildMonitorController() {
         getMyMonitors,
         getMyMonitorSummary,
         pingCronMonitor,
-        createMonitor,
+        createAppMonitor,
+        createAppMonitors,
         fetchMonitorsFromUptimeRobot,
     };
 
@@ -37,21 +38,36 @@ function buildMonitorController() {
         return monitorService.pingCronMonitor(params.urlParams.cronMonitorId);
     }
 
-    async function createMonitor(
+    async function createAppMonitor(
         params: {
             body: {
-                displayName: Monitor['displayName'];
-                frequency: Monitor['frequency'];
-                url: Monitor['url'];
+                displayName: string;
+                frequency: number;
+                url: string;
             };
         },
         user: User,
     ) {
-        return monitorService.createMonitor({
-            displayName: params.body.displayName,
-            frequency: params.body.frequency,
-            url: params.body.url,
+        return monitorService.createAppMonitor(
+            {
+                displayName: params.body.displayName,
+                frequency: params.body.frequency,
+                url: params.body.url,
+            },
             user,
-        });
+        );
+    }
+
+    async function createAppMonitors(
+        params: {
+            body: Array<{
+                displayName: string;
+                frequency: number;
+                url: string;
+            }>;
+        },
+        user: User,
+    ) {
+        return monitorService.createAppMonitors(params.body, user);
     }
 }

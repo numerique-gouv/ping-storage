@@ -13,14 +13,27 @@ const monitorRoutes: Array<routeType<any, any, any>> = [
     },
     {
         method: 'POST',
-        path: '/me/monitors',
+        path: '/me/app-monitors',
         kind: 'authenticated',
-        controller: monitorController.createMonitor,
+        controller: monitorController.createAppMonitor,
         schema: Joi.object({
             frequency: Joi.number().greater(0).required(),
             url: Joi.string().required(),
             displayName: Joi.string().required(),
         }),
+    },
+    {
+        method: 'POST',
+        path: '/me/app-monitors/bulk',
+        kind: 'authenticated',
+        controller: monitorController.createAppMonitors,
+        schema: Joi.array().items(
+            Joi.object({
+                frequency: Joi.number().greater(0).required(),
+                url: Joi.string().required(),
+                displayName: Joi.string().required(),
+            }),
+        ),
     },
     {
         method: 'GET',

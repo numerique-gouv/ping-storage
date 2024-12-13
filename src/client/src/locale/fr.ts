@@ -4,6 +4,8 @@ const fr = {
             fetchMonitorsButton: 'Récupérer les monitors',
             list: {
                 frequencyLabel: 'toutes les {{frequency}} minutes',
+                importButton: 'Importer',
+                successMessage: "L'import des monitors s'est déroulé avec succès",
             },
         },
     },

@@ -5,11 +5,19 @@ const monitorsApi = {
     getMyMonitorSummary,
     fetchMonitorsFromUptimeRobot,
     createMonitor,
+    createMonitors,
 };
 
 async function createMonitor(params: { displayName: string; frequency: number; url: string }) {
-    const URI = `me/monitors`;
+    const URI = `me/app-monitors`;
     return performApiCall<monitorType>(URI, 'POST', params);
+}
+
+async function createMonitors(
+    monitorDtos: Array<{ displayName: string; frequency: number; url: string }>,
+) {
+    const URI = `me/app-monitors/bulk`;
+    return performApiCall<monitorType[]>(URI, 'POST', monitorDtos);
 }
 
 type monitorType = { id: string; name: string; displayName: string };

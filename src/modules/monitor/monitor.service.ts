@@ -4,8 +4,9 @@ import { slugify } from '../../lib/utils';
 import { buildMonitorEventService } from '../monitorEvent';
 import { eventKindType } from '../monitorEvent/types';
 import { User } from '../user';
+import { convertAppMonitorDtoToMonitor } from './lib/convertAppMonitorDtoToMonitor';
 import { Monitor } from './Monitor.entity';
-import { appMonitorType, cronMonitorType } from './types';
+import { appMonitorDtoType, appMonitorType, cronMonitorType } from './types';
 
 export { buildMonitorService };
 
@@ -16,7 +17,8 @@ function buildMonitorService() {
         getAppMonitors,
         getMyMonitorSummary,
         getMyMonitors,
-        createMonitor,
+        createAppMonitor,
+        createAppMonitors,
         computeShouldPingAppMonitor,
         pingAppMonitor,
         checkAllCronMonitors,
@@ -26,26 +28,17 @@ function buildMonitorService() {
 
     return monitorService;
 
-    async function createMonitor(params: {
-        displayName: Monitor['displayName'];
-        frequency: Monitor['frequency'];
-        url: Monitor['url'];
-        user: User;
-    }) {
-        const name = slugify(params.displayName);
-        const monitor = new Monitor();
-        monitor.displayName = params.displayName;
-        monitor.name = name;
-        monitor.url = params.url;
-        monitor.frequency = params.frequency;
-        monitor.user = params.user;
-        return monitorRepository.save({
-            displayName: params.displayName,
-            name,
-            url: params.url,
-            frequency: params.frequency,
-            user: params.user,
-        });
+    async function createAppMonitor(appMonitorDto: appMonitorDtoType, user: User) {
+        const monitor = convertAppMonitorDtoToMonitor(appMonitorDto, user);
+
+        return monitorRepository.save(monitor);
+    }
+    async function createAppMonitors(appMonitorDtos: appMonitorDtoType[], user: User) {
+        const monitors = appMonitorDtos.map((appMonitorDto) =>
+            convertAppMonitorDtoToMonitor(appMonitorDto, user),
+        );
+
+        return monitorRepository.save(monitors);
     }
 
     async function assertIsMonitorUpByName(name: Monitor['name']) {
