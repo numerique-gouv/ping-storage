@@ -40,6 +40,12 @@ const monitorRoutes: Array<routeType<any, any, any>> = [
         path: '/monitors/:monitorName/health',
         controller: monitorController.assertIsMonitorUpByName,
     },
+    {
+        method: 'POST',
+        kind: 'authenticated',
+        path: '/uptime-robot/monitors',
+        controller: monitorController.fetchMonitorsFromUptimeRobot,
+    },
 ];
 
 export { monitorRoutes };

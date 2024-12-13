@@ -2,6 +2,9 @@ const fr = {
     importFrom: {
         uptimeRobot: {
             fetchMonitorsButton: 'Récupérer les monitors',
+            list: {
+                frequencyLabel: 'toutes les {{frequency}} minutes',
+            },
         },
     },
     monitors: {

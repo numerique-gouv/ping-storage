@@ -1,4 +1,5 @@
 import { dataSource } from '../../dataSource';
+import { buildUptimeRobotApi } from '../../lib/externalApis/uptimeRobotApi';
 import { slugify } from '../../lib/utils';
 import { buildMonitorEventService } from '../monitorEvent';
 import { eventKindType } from '../monitorEvent/types';
@@ -20,6 +21,7 @@ function buildMonitorService() {
         pingAppMonitor,
         checkAllCronMonitors,
         pingCronMonitor,
+        fetchMonitorsFromUptimeRobot,
     };
 
     return monitorService;
@@ -224,19 +226,9 @@ function buildMonitorService() {
         }
     }
 
-    async function getMyCronMonitorSummary(monitorId: Monitor['id']) {
-        const monitorEventService = buildMonitorEventService();
+    async function fetchMonitorsFromUptimeRobot(uptimeRobotApiKey: string) {
+        const uptimeRobotApi = buildUptimeRobotApi(uptimeRobotApiKey);
 
-        const cronMonitor = (await monitorRepository.findOneByOrFail({
-            id: monitorId,
-            kind: 'cron',
-        })) as cronMonitorType;
-        const monitorEvents = await monitorEventService.getEventsForMonitor(monitorId);
-        const status = await getCronMonitorStatus(cronMonitor);
-        return {
-            name: cronMonitor.name,
-            status,
-            events: monitorEvents,
-        };
+        return uptimeRobotApi.fetchMonitors();
     }
 }

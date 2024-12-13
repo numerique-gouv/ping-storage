@@ -1,6 +1,11 @@
 import { performApiCall } from './utils';
 
-const monitorsApi = { getMyMonitors, getMyMonitorSummary, createMonitor };
+const monitorsApi = {
+    getMyMonitors,
+    getMyMonitorSummary,
+    fetchMonitorsFromUptimeRobot,
+    createMonitor,
+};
 
 async function createMonitor(params: { displayName: string; frequency: number; url: string }) {
     const URI = `me/monitors`;
@@ -12,6 +17,13 @@ type monitorType = { id: string; name: string; displayName: string };
 async function getMyMonitors() {
     const URI = `me/monitors`;
     return performApiCall<monitorType[]>(URI, 'GET');
+}
+
+type appMonitorDtoType = { displayName: string; frequency: number; url: string };
+
+async function fetchMonitorsFromUptimeRobot(uptimeRobotApiKey: string) {
+    const URI = `uptime-robot/monitors`;
+    return performApiCall<appMonitorDtoType[]>(URI, 'POST', { uptimeRobotApiKey });
 }
 
 type statusValueType = 'up' | 'down';
@@ -30,3 +42,4 @@ async function getMyMonitorSummary(monitorId: string) {
 }
 
 export { monitorsApi };
+export type { appMonitorDtoType };

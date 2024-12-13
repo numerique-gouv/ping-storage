@@ -12,12 +12,17 @@ function buildMonitorController() {
         getMyMonitorSummary,
         pingCronMonitor,
         createMonitor,
+        fetchMonitorsFromUptimeRobot,
     };
 
     return monitorController;
 
     async function assertIsMonitorUpByName(params: { urlParams: { monitorName: string } }) {
         return monitorService.assertIsMonitorUpByName(params.urlParams.monitorName);
+    }
+
+    async function fetchMonitorsFromUptimeRobot(params: { body: { uptimeRobotApiKey: string } }) {
+        return monitorService.fetchMonitorsFromUptimeRobot(params.body.uptimeRobotApiKey);
     }
 
     async function getMyMonitorSummary(params: { urlParams: { monitorId: string } }) {

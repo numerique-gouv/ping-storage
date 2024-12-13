@@ -9,23 +9,19 @@ async function performApiCall<dataT>(
     const url = `${BASE_URL}/${uri}`;
     let response: Response;
     const token = localStorage.jwtTokenHandler.get();
-
-    if (method === 'GET') {
-        response = await fetch(url, { method, headers: { Authorization: `Bearer ${token}` } });
-    } else {
-        const headers: Record<string, string> = {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        };
-        if (token) {
-            headers['Authorization'] = `Bearer ${token}`;
-        }
-        response = await fetch(url, {
-            method,
-            headers,
-            body: JSON.stringify(body),
-        });
+    const headers: Record<string, string> = {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+    };
+    if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
     }
+
+    response = await fetch(url, {
+        method,
+        headers,
+        body: JSON.stringify(body),
+    });
     if (!response.ok) {
         if (response.status === 401) {
             localStorage.jwtTokenHandler.remove();

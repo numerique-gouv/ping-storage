@@ -46,7 +46,7 @@ function buildUserService() {
         const user = await userRepository.findOneOrFail({ where: { email } });
 
         const isPasswordCorrect = hasher.verify(password, user.hashedPassword);
-        console.log(hasher.hash(password));
+
         if (isPasswordCorrect) {
             const token = createJwt({ userId: user.id, email: user.email });
             const userInfo = { email };
